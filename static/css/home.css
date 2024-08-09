@@ -1,0 +1,135 @@
+.horizontal-scroll-section {
+    overflow-x: auto; /* Enable horizontal scrolling */
+    white-space: nowrap; /* Prevent wrapping of child elements */
+    padding: 20px 0; /* Optional padding */
+  
+  }
+  
+  .scroll-item {
+    display: inline-block; /* Arrange items in a row */
+    min-width: 300px; /* Set a minimum width for each item */
+    /* height: 300px; Set a fixed height for each item */
+    margin-right: 0px; /* Optional margin between items */
+    background-color: #f0f0f0; /* Background color for items */
+    border: 1px solid #ccc; /* Optional border for items */
+    border-radius: 8px; /* Optional border radius */
+    vertical-align: top; /* Align items at the top */
+  }
+  .rev{
+    margin-top:80px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+  /* blog  */
+  .blog1{
+  display: flex;
+  
+  justify-content: center;
+  /* background: url('bloggggg.jpg'); */
+  
+  min-height: 400px;
+      
+  }
+  .blog-content {
+    display: flex;
+    background-color: #1b1a1a86;
+  backdrop-filter: blur(100px);
+  min-height: 400px;
+  }
+  .loginim
+  {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 600px;
+  background:url('1.jpg') no-repeat;
+  background-size: cover;
+  background-position: center;
+  }
+  .loginhp{
+  padding-top: 230px;
+  height:600px;
+  width: 100%;
+  align-items: center;
+  background:#0000004e;
+  backdrop-filter: blur(3px);
+  }
+  .texth4{
+  font-weight: 700;
+  font-size: 45px;
+  color: white;
+  }
+  .texth5{
+  padding: 0px 0 0 0;
+  font-size: 30px;
+  }
+  .textp{
+  font-size: 16px;
+  color: white;
+  padding-top: 5px;
+  }
+  
+  .footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    
+    bottom: 0;
+    width: 100%;
+  }
+  
+  .footer-container {
+    display: flex;
+    justify-content: space-around;
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+  
+  .footer-section {
+    flex: 1;
+    margin: 10px;
+  }
+  
+  .footer-section h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+  
+  .footer-section p, .footer-section ul {
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+  }
+  
+  .footer-section ul {
+    list-style: none;
+  }
+  
+  .footer-section ul li {
+    margin-bottom: 5px;
+  }
+  
+  .footer-section ul li a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .footer-section ul li a:hover {
+    text-decoration: underline;
+  }
+  
+  .footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    border-top: 1px solid #444;
+    padding-top: 10px;
+  }
+  
+  .footer-bottom p {
+    margin: 0;
+    font-size: 14px;
+  }
