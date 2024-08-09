@@ -26,8 +26,23 @@
       </div>
       <div>
         <!-- login -->
-        <a class="btn btn-primary btn1 ms-2" role="button" data-bs-toggle="modal" href="#UserLoginModal"
-          style="margin-right:1%;   background:#ffaa00;border: none;">Login</a>
+        <!-- {% if 'data' in request.session.name %}
+          <div>{{ request.session.name }}</div>
+        {% else %}
+        <a class="btn btn-primary btn1 ms-2" href="{% url 'login' %}" style="margin-right:1%;background:#ffaa00;border: none;">
+            Login
+        </a>
+        {% endif %} -->
+        
+        
+          {% if username %}
+            <p>Hello, {{ username }}!</p>
+            <a href="{% url 'logout' %}">Logout</a>
+          {% else %}
+            <a class="btn btn-primary btn1 ms-2" href="{% url 'login' %}" style="margin-right:1%;background:#ffaa00;border: none;">
+              Login
+            </a>
+          {% endif %}
       </div>
       
       </div>
@@ -36,17 +51,4 @@
 
 
 
-  <!-- login Modal -->
-  <div class="modal fade" id="UserLoginModal" aria-hidden="true" aria-labelledby="UserLoginModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="eUserLoginModal">User Login</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          {% include 'user_login.html' %}
-        </div>
-      </div>
-    </div>
-  </div>
+ 

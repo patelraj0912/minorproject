@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
+import pymongo
+
+MONGODB_URI = "mongodb+srv://patelraj04434:zEULQTyLnHLg9sM8@mylaravelprojectcluster.nlj1h4o.mongodb.net/pythontest?retryWrites=true&w=majority"
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

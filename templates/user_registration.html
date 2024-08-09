@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Registration</title>
-    <link rel="stylesheet" href="{% static 'css/user_login.css'%}">
+    <link rel="stylesheet" href="{% static 'css/user_registration.css'%}">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
@@ -15,15 +15,20 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </head>
 
-<body>
-    <div class="container" style="width: 70%;">
+<body class="user_reg_body">
+    <div class="container con" style="width: 70%;">
         <h2>User Registration</h2>
-        <form action="/submit_registration" method="post" style="width: 84%;">
-
-            <div class="form-group">
+        <form method="post" style="width: 84%;">
+            {% csrf_token %}
+            <!-- <div class="form-group">
                 <label for="name">Name:</label>
                 <i class="bi bi-person-fill"></i>
                 <input type="text" id="name" name="name" required>
+            </div> -->
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <i class="bi bi-person-circle"></i>
+                <input type="text" id="username" name="username" required>
             </div>
 
             <div class="form-group">
@@ -51,18 +56,20 @@
             </div>
 
             <div class="form-group">
-                <label for="username">Username:</label>
-                <i class="bi bi-person-circle"></i>
-                <input type="text" id="username" name="username" required>
-            </div>
-
-            <div class="form-group">
                 <label for="password">Password:</label>
                 <i class="bi bi-lock-fill"></i>
                 <input type="password" id="password" name="password" required>
             </div>
 
-            <button type="submit">Register</button>
+            <button class="reg_button" type="submit">Register</button>
+            {% if messages %}
+            <div class="border border-danger bg-gradient-warning text-dark m-2" style="background-color: #e1bebe;">
+            <ul class="messages my-auto" style=" color: rgb(255, 0, 0);">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
         </form>
     </div>
     

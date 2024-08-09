@@ -5,7 +5,7 @@
     font-family: 'Arial', sans-serif;
 }
 
-.user_login_body {
+.user_reg_body {
     background: linear-gradient(to bottom, #5d4210, #2b1d07);
     display: flex;
     flex-direction: column;
@@ -59,18 +59,13 @@ label {
 
 .form-group i {
     position: absolute;
-    left: 10px;
-    top: 12px;
-    color: #ffffff;
-}
-.form-group i {
-    position: absolute;
     left: 8px;
     top: 50px;
     color: #ffffff;
 }
 
 input[type="text"],
+input[type="email"],
 input[type="password"] {
     width: 100%;
     padding: 12px 12px 12px 40px;
@@ -85,13 +80,14 @@ input[type="password"] {
 }
 
 input[type="text"]:focus,
+input[type="email"]:focus,
 input[type="password"]:focus {
     border-color:#ffaa00 ;
     outline: none;
     box-shadow: 0 0 10px rgba(254, 242, 230, 0.963);
 }
 
-.login_button {
+.reg_button {
     width: 100%;
     padding: 12px;
     background: #ffaa00;
@@ -105,23 +101,10 @@ input[type="password"]:focus {
 
 button:hover {
     background: rgba(254, 242, 230, 0.963);
+    color: #ffaa00;
     transform: translateY(-2px);
-    color: #ffaa00;
-}
 
-.registration-link {
-    margin-top: 20px;
-    color: #ffaa00;
-    text-decoration: none;
-    font-weight: bold;
-    display: block;
-    text-align: center;
 }
-
-.registration-link:hover {
-    text-decoration: underline;
-}
-
 
 
 /* Responsive Styles */
