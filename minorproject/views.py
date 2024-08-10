@@ -61,3 +61,7 @@ def logout(request):
 
 def blog(request):
     return render(request,'blog.html')
+
+
+def about_us(request):
+    return render(request,'about_us.html')
