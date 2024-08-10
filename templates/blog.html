@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Page</title>
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body>
+      <!-- navigation -->
+  {% include "navbar.html" %}
+ 
+    <main class="content">
+        <section class="post" style="color: black;">
+            <h2 class="post-title">Blog Post Title 1</h2>
+            <p class="post-date" style="color: black;">Posted on July 22, 2024</p>
+            <p class="post-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque leo et
+                est auctor, vitae cursus justo auctor. Donec tincidunt velit quis magna scelerisque, ac malesuada leo
+                fermentum. Praesent non dictum eros. Integer a felis et dolor viverra pharetra.</p>
+        </section>
+        <section class="post" style="color: black;">
+            <h2 class="post-title">Blog Post Title 2</h2>
+            <p class="post-date" style="color: black;">Posted on July 20, 2024</p>
+            <p class="post-content">Phasellus sit amet ex nec leo cursus suscipit. Curabitur sit amet turpis ut elit
+                tristique scelerisque. Integer sed nulla dui. Suspendisse potenti. Mauris bibendum ligula vel purus
+                dapibus, et varius enim interdum. In ut lorem eget elit convallis varius a vitae nulla.</p>
+        </section>
+        <section class="post" style="color: black;">
+            <h2 class="post-title">Blog Post Title 3</h2>
+            <p class="post-date" style="color: black;">Posted on July 18, 2024</p>
+            <p class="post-content">Vivamus at ex non urna tincidunt accumsan. Proin convallis, lectus non egestas
+                scelerisque, risus eros vulputate nisi, vel euismod est quam nec elit. Nam gravida ullamcorper metus,
+                sit amet consequat ex sagittis ut. Cras sollicitudin suscipit nibh vel vulputate.</p>
+        </section>
+    </main>
+
+
+     <!-- footer -->
+  {% include "footer.html" %}
+    
+</body>
+
+</html>

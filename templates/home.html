@@ -206,6 +206,8 @@
       </div>
     </div>
     <!-- login -->
+    {% if username %}
+    {% else %}
     <div style="margin-top:70px;">
       <div class="loginim">
         <div class="loginhp">
@@ -214,13 +216,13 @@
             <div class="card-body">
               <h5 class="card-title texth5" style="  color: white;">Want to join our Family?</h5>
               <p class="card-text textp">Join our family and get exclusive experience.</p>
-              <a href="#" class="btn btn-primary" style="background:#ffaa00;border: none;">Login</a>
+              <a href="{% url 'login' %}" class="btn btn-primary" style="background:#ffaa00;border: none;">Login</a>
             </div>
           </div>
         </div>
       </div>
-
     </div>
+    {% endif %}
   </div>
 
   <!-- footer -->

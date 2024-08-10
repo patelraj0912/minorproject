@@ -57,3 +57,7 @@ def logout(request):
     request.session.flush()  # Clear the session
     messages.success(request, 'You have been logged out.')
     return redirect('home')
+
+
+def blog(request):
+    return render(request,'blog.html')
