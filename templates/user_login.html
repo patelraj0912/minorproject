@@ -34,13 +34,13 @@
 
             <button class="login_button" type="submit">Login</button>
             {% if messages %}
-            <div class="border border-danger bg-gradient-warning text-dark m-2" style="background-color: #e1bebe;">
-            <ul class="messages my-auto" style=" color: rgb(255, 0, 0);">
+                <div class="alert alert-danger" role="alert">
+                <ul class="messages my-auto">
                 {% for message in messages %}
                 <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
                 {% endfor %}
-            </ul>
-        </div>
+                </ul>
+            </div>
             {% endif %}
             <a href="{% url 'registration' %}" class="registration-link">Register Now</a>
         </form>

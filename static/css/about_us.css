@@ -1,4 +1,4 @@
-body {
+/* body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
@@ -12,15 +12,14 @@ body {
     align-items: center;
     min-height: 100vh;
     color: #333;
-  }
+  } */
   
-  .about-container {
+  . {
     backdrop-filter: blur(4px);
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 1200px;
-    margin: 20px;
+    margin: 0px;
     padding: 20px;
     background: rgba(255, 255, 255, 0.7);
     border-radius: 8px;

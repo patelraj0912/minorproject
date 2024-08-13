@@ -2,6 +2,8 @@ from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from .mongodb_client import mongo_client
 from django.contrib import messages
+from django.core.mail import send_mail
+import random
 # from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 
 def home(request):
@@ -16,10 +18,9 @@ def registration(request):
         state = request.POST['state']
         username = request.POST['username']
         password = request.POST['password']
-        
-
+    
         collection = mongo_client.get_collection('users')
-        if collection.find_one({'username': username , 'email':email}):
+        if collection.find_one({'username': username}):
             messages.error(request, 'Username already exists')
             return redirect('registration')
 
@@ -32,11 +33,13 @@ def registration(request):
             'password': password
         }
         collection.insert_one(data)
-        messages.success(request, 'Signup successful! Please login.')
+        # messages.success(request, 'Signup successful! Please login.')
         return redirect('login')
     return render(request, "user_registration.html")
 
 def login(request):
+    if 'username' in request.session :
+        return redirect('home')
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -46,16 +49,16 @@ def login(request):
         
         if user:
             request.session['username'] = username
-            messages.success(request, 'You have successfully logged in.')
             return redirect('home')
 
         messages.error(request, 'Invalid credentials')
         return redirect('login')
+    
     return render(request, "user_login.html")
 
 def logout(request):
     request.session.flush()  # Clear the session
-    messages.success(request, 'You have been logged out.')
+    # messages.success(request, 'You have been logged out.')
     return redirect('home')
 
 
@@ -65,3 +68,6 @@ def blog(request):
 
 def about_us(request):
     return render(request,'about_us.html')
+
+def review(request):
+    return render(request,'review.html')

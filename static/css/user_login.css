@@ -13,7 +13,7 @@
     align-items: center;
     min-height: 100vh;
     color: white;
-    background-image: url('cf.jpg');
+    /* background-image: url('cf.jpg'); */
     background-size: cover;
     background-position: center;
     backdrop-filter: blur(10px);

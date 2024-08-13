@@ -7,7 +7,7 @@
     font-family: 'Arial', sans-serif;
 }
 
-body {
+.blog-body {
     background: linear-gradient(to bottom, #5d4210, #2b1d07);
     color: white;
     background-image: url('cf.jpg');
