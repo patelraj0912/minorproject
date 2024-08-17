@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid shadow mb-3 sticky-top" style="background-color: rgb(255, 255, 255);">
 <nav class="navbar navbar-expand-lg ">
       <a class="navbar-brand" href="#">LOGO</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -6,7 +6,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-left:40%;">
+        <ul class="navbar-nav me-auto mb-2 " style="margin-left:40%;">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{% if 'username' in request.session %}{% url 'home' %}{% else %}#{% endif %}" style="padding:8px 15px;">Home</a>
           </li>
@@ -17,60 +17,38 @@
             <a class="nav-link active" aria-current="page" href="{% if 'username' in request.session %}{% url 'review' %}{% else %}#review_home{% endif %}" style="padding:8px 15px;">Review</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% if 'username' in request.session %}{% url 'blog' %}{% else %}#bog_home{% endif %}" style="padding:8px 15px;">Blog</a>
+            <a class="nav-link active" aria-current="page" href="{% if 'username' in request.session %}{% url 'blog' %}{% else %}#blog_home{% endif %}" style="padding:8px 15px;">Blog</a>
           </li>
-          
-          <!-- 
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#" style="padding:8px 15px;">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#about_us_home" style="padding:8px 15px;">About Us</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#review_home" style="padding:8px 15px;">Review</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#blog_home" style="padding:8px 15px;">Blog</a>
-          </li>
-           -->
         </ul>
         <!-- search -->
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" style="color:#ffaa00;border-color: #ffaa00;"
-            type="submit">Search</button>
+        {% if 'username' in request.session %}
+        <form class="d-flex input-group w-25">
+          <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-warning"
+            type="submit"><i class="bi bi-search m-auto"></i></button>
         </form>
+        {% endif %}
       </div>
-      <div>
-        <!-- login -->
-        <!-- {% if 'data' in request.session.name %}
-          <div>{{ request.session.name }}</div>
+
+      <!-- login -->
+      <div class="mx-2">
+        {% if 'username' in request.session %}
+          <div >
+          <button type="button" class="btn btn-outline-info"><i class="bi bi-person-circle"></i></button>
+          <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="visually-hidden">Toggle Dropdown</span>
+          </button>
+          <ul class="dropdown-menu ">
+            <li><p>Hello, {{ request.session.username }}</p></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+          </ul>
+        </div>
         {% else %}
-        <a class="btn btn-primary btn1 ms-2" href="{% url 'login' %}" style="margin-right:1%;background:#ffaa00;border: none;">
+          <a class="btn btn-primary btn1 ms-2" href="{% url 'login' %}" style="margin-right:1%;background:#ffaa00;border: none;">
             Login
-        </a>
-        {% endif %} -->
-        
-        
-          {% if 'username' in request.session %}
-            
-            <button type="button" class="btn btn-warning"><i class="bi bi-person-circle"></i></button>
-            <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-              <span class="visually-hidden">Toggle Dropdown</span>
-            </button>
-            <ul class="dropdown-menu">
-              <li><p>Hello, {{ username }}!</p></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a href="{% url 'logout' %}">Logout</a></li>
-            </ul>
-            <!-- <p>Hello, {{ username }}!</p> -->
-            
-          {% else %}
-            <a class="btn btn-primary btn1 ms-2" href="{% url 'login' %}" style="margin-right:1%;background:#ffaa00;border: none;">
-              Login
-            </a>
-          {% endif %}
+          </a>
+        {% endif %}
       </div>
       
       </div>

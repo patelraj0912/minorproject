@@ -14,8 +14,10 @@ import os
 from pathlib import Path
 import pymongo
 
-MONGODB_URI = "mongodb+srv://patelraj04434:zEULQTyLnHLg9sM8@mylaravelprojectcluster.nlj1h4o.mongodb.net/pythontest?retryWrites=true&w=majority"
-
+# MONGODB_URI = "mongodb+srv://patelraj04434:zEULQTyLnHLg9sM8@mylaravelprojectcluster.nlj1h4o.mongodb.net/pythontest?retryWrites=true&w=majority"
+MONGO_URI = 'mongodb+srv://patelraj04434:zEULQTyLnHLg9sM8@mylaravelprojectcluster.nlj1h4o.mongodb.net/'
+client = pymongo.MongoClient(MONGO_URI)
+db = client['pythontest']
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -43,6 +45,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'grpcx7@gmail.com'
+EMAIL_HOST_PASSWORD = 'bnls yuao urwl urmv'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

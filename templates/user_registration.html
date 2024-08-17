@@ -13,68 +13,154 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <style>
+        .error {
+            color: red;
+            background-color: rgb(250, 193, 193)
+        }
+    </style>
 </head>
 
 <body class="user_reg_body">
     <div class="container con" style="width: 70%;">
         <h2>User Registration</h2>
-        <form method="post" style="width: 84%;">
+        <form id="registrationForm" method="post" style="width: 84%;">
             {% csrf_token %}
             <!-- <div class="form-group">
                 <label for="name">Name:</label>
                 <i class="bi bi-person-fill"></i>
-                <input type="text" id="name" name="name" required>
+                <input type="text" id="name" name="name" >
             </div> -->
             <div class="form-group">
                 <label for="username">Username:</label>
-                <i class="bi bi-person-circle"></i>
-                <input type="text" id="username" name="username" required>
+                <i class="bi bi-person-circle mb-2"></i>
+                <input type="text" id="username" name="username" >
+                <span id="usernameError" class="error text-danger"></span><br>
             </div>
 
             <div class="form-group">
                 <label for="email">Email:</label>
-                <i class="bi bi-envelope-fill"></i>
-                <input type="email" id="email" name="email" required>
+                <i class="bi bi-envelope-fill" ></i>
+                <input type="email" id="email" name="email">
+                <span id="emailError" class="error text-danger"></span><br>
             </div>
 
             <div class="form-group">
                 <label for="area">Area:</label>
-                <i class="bi bi-geo-alt-fill"></i>
-                <input type="text" id="area" name="area" required>
+                <i class="bi bi-geo-alt-fill mb-2"></i>
+                <input type="text" id="area" name="area">
+                <span id="areaError" class="error text-danger"></span><br>
             </div>
 
             <div class="form-group">
                 <label for="city">City:</label>
-                <i class="bi bi-building"></i>
-                <input type="text" id="city" name="city" required>
+                <i class="bi bi-building mb-2"></i>
+                <input type="text" id="city" name="city" >
+                <span id="cityError" class="error text-danger"></span><br>
             </div>
 
             <div class="form-group">
                 <label for="state">State:</label>
-                <i class="bi bi-geo-fill"></i>
-                <input type="text" id="state" name="state" required>
+                <i class="bi bi-geo-fill mb-2"></i>
+                <input type="text" id="state" name="state" >
+                <span id="stateError" class="error text-danger"></span><br>
             </div>
 
             <div class="form-group">
                 <label for="password">Password:</label>
-                <i class="bi bi-lock-fill"></i>
-                <input type="password" id="password" name="password" required>
+                <i class="bi bi-lock-fill mb-2"></i>
+                <input type="password" id="password" name="password" >
+                <span id="passwordError" class="error text-danger"></span><br><br>
+                
             </div>
-
-            <button class="reg_button" type="submit">Register</button>
             {% if messages %}
-            <div class="border border-danger bg-gradient-warning text-dark m-2" style="background-color: #e1bebe;">
-            <ul class="messages my-auto" style=" color: rgb(255, 0, 0);">
-                {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                {% endfor %}
+            <div class="alert alert-danger" role="alert">
+            <ul class="messages my-auto">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
             </ul>
-            {% endif %}
+        </div>
+        {% endif %}
+            <!-- <button class="reg_button" type="submit">Register</button> -->
+            <button class="reg_button" type="button" onclick="validateForm()">Register</button>
+            
         </form>
     </div>
     
 
 
 </body>
+<script>
+    function validateForm() {
+        // Clear previous errors
+        document.getElementById('emailError').innerText = '';
+        document.getElementById('areaError').innerText = '';
+        document.getElementById('cityError').innerText = '';
+        document.getElementById('stateError').innerText = '';
+        document.getElementById('usernameError').innerText = '';
+        document.getElementById('passwordError').innerText = '';
 
+        // Get form values
+        var email = document.getElementById('email').value.trim();
+        var area = document.getElementById('area').value.trim();
+        var city = document.getElementById('city').value.trim();
+        var state = document.getElementById('state').value.trim();
+        var username = document.getElementById('username').value.trim();
+        var password = document.getElementById('password').value.trim();
+
+        var isValid = true;
+
+        // Email validation
+        var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            document.getElementById('emailError').innerText = 'Invalid email format.';
+            isValid = false;
+        }
+
+        // Area validation
+        if (area.length < 2) {
+            document.getElementById('areaError').innerText = 'Area must be at least 2 characters long.';
+            isValid = false;
+        }
+
+        // City validation
+        if (city.length < 2) {
+            document.getElementById('cityError').innerText = 'City must be at least 2 characters long.';
+            isValid = false;
+        }
+
+        // State validation
+        if (state.length < 2) {
+            document.getElementById('stateError').innerText = 'State must be at least 2 characters long.';
+            isValid = false;
+        }
+
+        // Username validation (only allow alphanumeric and underscores)
+        var usernamePattern = /^[a-zA-Z0-9_]+$/;
+        if (!usernamePattern.test(username)) {
+            document.getElementById('usernameError').innerText = 'Username can only contain letters, numbers, and underscores.';
+            isValid = false;
+        }
+
+        // Password validation (min 8 characters, at least one digit and one special character)
+        if (password.length < 8) {
+            document.getElementById('passwordError').innerText = 'Password must be at least 8 characters long.';
+            isValid = false;
+        }
+        if (!/\d/.test(password)) {
+            document.getElementById('passwordError').innerText = 'Password must contain at least one digit.';
+            isValid = false;
+        }
+        if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+            document.getElementById('passwordError').innerText = 'Password must contain at least one special character.';
+            isValid = false;
+        }
+
+        // If all validations pass, submit the form
+        if (isValid) {
+            document.getElementById('registrationForm').submit();
+        }
+    }
+</script>
 </html>

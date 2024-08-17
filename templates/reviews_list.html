@@ -1,0 +1,20 @@
+<!-- templates/reviews_list.html -->
+{% if reviews %}
+    {% for review in reviews %}
+        <div class="review-item card w-25">
+            <h2 class="card-title">{{ review.dishname }}</h2>
+            <div class="card-body">
+            <p><strong>Restaurant:</strong> {{ review.restaurantname }}</p>
+            <p><strong>Area:</strong> {{ review.area }}</p>
+            <p><strong>City:</strong> {{ review.city }}</p>
+            <p><strong>Description:</strong> {{ review.description }}</p>
+            </div>
+            <div class="card-footer">
+                <p>{{ review.timestamp }}</p>
+                <p>by {{ review.username }}</p>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No reviews found.</p>
+{% endif %}

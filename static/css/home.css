@@ -26,14 +26,13 @@
   display: flex;
   
   justify-content: center;
-  /* background: url('bloggggg.jpg'); */
   
   min-height: 400px;
       
   }
   .blog-content {
     display: flex;
-    background-color: #1b1a1a86;
+    /* background-color: #1b1a1a86; */
   backdrop-filter: blur(100px);
   min-height: 400px;
   }

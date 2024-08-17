@@ -18,7 +18,7 @@
 
 </head>
 
-<body style="background-color: rgba(254, 242, 230, 0.963) ; position: relative;">
+<body style="background-color: #fbfcf8 ; position: relative;">
 
   <!-- navigation -->
   {% include "navbar.html" %}
@@ -95,12 +95,12 @@
   </div>
 
   <!-- Review -->
-  <div class="container mt-5" style="max-width: 1420px;">
-    <div class="row ">
-      <h4 class="card-title  " id="review_home">Reviews</h4>
+  <div class="container mt-5" id="review_home" style="max-width: 1420px;">
+    <div class="row " >
+      <h4 class="card-title">Reviews</h4>
       <div class="horizontal-scroll-section" style="padding-left: 0;">
         <div class="col-sm-5 scroll-item">
-          <div class="card" style="background-color:rgba(255, 249, 243, 0.909); ">
+          <div class="card" style="background: linear-gradient(180deg, #e0eaf3 0%, #cfdef3); ">
             <div class="card-body">
               <h5 class="card-title">Review1</h5>
               <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
@@ -109,7 +109,7 @@
           </div>
         </div>
         <div class="col-sm-5 scroll-item">
-          <div class="card" style="background-color:rgba(255, 249, 243, 0.909);">
+          <div class="card" style="background: linear-gradient(35deg, rgba(255,249,227,1) 0%, rgba(255,255,255,1) 56%, rgba(240,248,255,1) 100%);">
             <div class="card-body">
               <h5 class="card-title">Review2</h5>
               <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
@@ -118,7 +118,7 @@
           </div>
         </div>
         <div class="col-sm-5 scroll-item">
-          <div class="card" style="background-color:rgba(255, 249, 243, 0.909);">
+          <div class="card" style="background: linear-gradient(35deg, rgba(255,249,227,1) 0%, rgba(255,255,255,1) 56%, rgba(240,248,255,1) 100%);">
             <div class="card-body">
               <h5 class="card-title">Review3</h5>
               <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
@@ -158,14 +158,13 @@
   </div>
 
   <!-- Blog -->
-  <div style="margin-top:80px;">
-    <h4 style="margin:0 0 2% 3.8%;" href="blog.php" id="blog_home">Blogs</h4>
+  <div style="margin-top:80px; background-image: linear-gradient( #ffffdd 0%, #fcfbee 100%);">
+    <h4 style="margin:0 0 2% 3.8%;" href="" id="blog_home">Blogs</h4>
 
     <div class="blog1">
       <div class="blog-content">
-        <div class="card-group">
-
-          <div class="card" style="margin:2%">
+        <div class="card-group" >
+          <div class="card shadow" style="margin:2%">
             <img src="" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">Blog1</h5>
@@ -203,6 +202,7 @@
         </div>
       </div>
     </div>
+
     <!-- login -->
     {% if username %}
     {% else %}
