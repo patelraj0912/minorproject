@@ -63,6 +63,8 @@ def login(request):
         if user:
             request.session['username'] = username
             request.session['userlevel'] = user['level']
+            request.session['userarea'] = user['area']
+            request.session['usercity'] = user['city']
             return redirect('home')
 
         messages.error(request, 'Invalid credentials')
@@ -94,13 +96,15 @@ def review(request):
         city = request.POST['city']
         description = request.POST['description']
         review={
+            'r_id':str(review_collection.count_documents({}) + 1),
             'username' : request.session.get('username'),
             'dishname':dishname,
             'restaurantname':restaurantname,
             'area':area,  
             'city':city,
             'description': description,
-            'timestamp': datetime.datetime.now()
+            'timestamp': datetime.datetime.now(),
+            'status' : 1
         }
         insert = review_collection.insert_one(review)
         if insert:
@@ -108,13 +112,14 @@ def review(request):
         else:
             return HttpResponse("Failed to insert review")
   
-    distinct_dishnames = review_collection.distinct("dishname")
-    distinct_restaurantnames = review_collection.distinct("restaurantname")
-    distinct_cities = review_collection.distinct("city")
-    distinct_areas = review_collection.distinct("area")
+    distinct_dishnames = review_collection.find({"status": "1"}).distinct("dishname")
+    distinct_restaurantnames = review_collection.find({"status": "1"}).distinct("restaurantname")
+    distinct_cities = review_collection.find({"status": "1"}).distinct("city")
+    distinct_areas = review_collection.find({"status": "1"}).distinct("area")
     
     # By default, display all reviews
-    reviews_list = list(review_collection.find())
+    reviews_list = list(review_collection.find({"status": "1"}).sort('timestamp', -1))
+   
 
     context = {
         'reviews': reviews_list,
@@ -157,6 +162,19 @@ def filter_reviews(request):
 
     return render(request, 'reviews_list.html', {'reviews': reviews_list})
 
+
+
+
+def delete_review(request, r_id):
+    if request.method == 'POST':
+        db.reviews.update_one(
+            {"r_id": r_id},
+            {"$set":{
+                "status":'0'
+            }})
+        
+        return redirect('review')
+    return HttpResponse('Something went wrong')
 
 def forgot_password_sendotp(request):
     if request.method == 'POST':

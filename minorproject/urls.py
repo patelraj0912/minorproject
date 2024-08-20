@@ -27,7 +27,9 @@ urlpatterns = [
     path('blog/',views.blog , name="blog"),
     path('about_us/',views.about_us , name="about_us"),
     path('review/',views.review , name="review"),
+    path('delete_review/<str:r_id>/',views.delete_review , name="delete_review"),
     path('filter-reviews/', views.filter_reviews, name='filter_reviews'),
     path('forgot_password_sendotp/',views.forgot_password_sendotp , name="forgot_password_sendotp"),
     path('forgot_password_verifyotp/',views.forgot_password_verifyotp , name="forgot_password_verifyotp"),
+    
 ]

@@ -1,20 +1,43 @@
 <!-- templates/reviews_list.html -->
 {% if reviews %}
     {% for review in reviews %}
-        <div class="review-item card w-25">
-            <h2 class="card-title">{{ review.dishname }}</h2>
-            <div class="card-body">
-            <p><strong>Restaurant:</strong> {{ review.restaurantname }}</p>
-            <p><strong>Area:</strong> {{ review.area }}</p>
-            <p><strong>City:</strong> {{ review.city }}</p>
-            <p><strong>Description:</strong> {{ review.description }}</p>
+        {% if review.status == "1" %}
+            <div class=" container card text-center my-5" style=" background-color:rgba(255, 249, 243, 0.909);" >
+                <div class="card-header" style="font-weight: 600; font-size: large;text-align: left;background-color:rgba(255, 249, 243, 0.909);">
+                    <div class="row">
+                        <div class="col"><h5 class="card-title">{{ review.dishname }}</h5></div>
+                        <div class="col" style="text-align: right;">
+                            {% if 'userlevel' in request.session and request.session.userlevel == "admin" %}
+                            <!-- <div class="btn btn-danger" href="{% url 'delete_review' review.r_id %}">Delete</div> -->
+                            <form action="{% url 'delete_review' review.r_id %}" method="POST">
+                                {% csrf_token %}
+                                <input class="btn btn-danger" type="submit" value="Delete">
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body" style="text-align: left;background-color:rgba(255, 249, 243, 0.909);">
+                    <div class="row">
+                        <div class="col"> <strong>Restaurant:</strong> {{ review.restaurantname }}</div>
+                    
+                        <div class="col"><strong>Area:</strong> {{ review.area }}</div>
+                        <div class="col"><strong>City:</strong> {{ review.city }}</div>
+                    </div><br>
+                    <p><strong>Description:</strong> {{ review.description }}</p>
+                </div>
+                <div class="card-footer text-muted" style="text-align: left; background-color:rgba(255, 249, 243, 0.909);">  
+                    <div class="row">
+                        <div class="col">{{ review.timestamp }}</div>
+                        <div class="col" style="text-align: right;"><i>{{ review.username }}</i></div>
+                    </div>
+                </div>
             </div>
-            <div class="card-footer">
-                <p>{{ review.timestamp }}</p>
-                <p>by {{ review.username }}</p>
-            </div>
-        </div>
+        {% endif %}
     {% endfor %}
 {% else %}
-    <p>No reviews found.</p>
+    <p class="card mt-5 text-center text-bg" style=" background-color:rgba(255, 249, 243, 0.909);">No reviews found.</p>
 {% endif %}
+
+
+
