@@ -1,9 +1,9 @@
-/* body {
+.about-body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #484848;
-    background-image: url('pr.jpg');
+    background-image: url('..\images\backgrounds\about_us.jpg');
     background-size: cover;
     background-position: center;
     display: flex;
@@ -12,7 +12,7 @@
     align-items: center;
     min-height: 100vh;
     color: #333;
-  } */
+  }
   
   .about-container {
     backdrop-filter: blur(4px);
