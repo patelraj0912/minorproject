@@ -84,7 +84,7 @@
         <select id="filterDishname">
             <option value="">All</option>
             {% for value in distinct_dishnames %}
-                <option value="{{ value }}">{{ value }}</option>
+                <option value="{{ value }}">{{ value|title }}</option>
             {% endfor %}
         </select>
 
@@ -92,7 +92,7 @@
         <select id="filterRestaurantname">
             <option value="">All</option>
             {% for value in distinct_restaurantnames %}
-                <option value="{{ value }}">{{ value }}</option>
+                <option value="{{ value }}">{{ value|capfirst }}</option>
             {% endfor %}
         </select>
 
@@ -100,7 +100,7 @@
         <select id="filterCity">
             <option value="">All</option>
             {% for value in distinct_cities %}
-                <option value="{{ value }}">{{ value }}</option>
+                <option value="{{ value }}">{{ value|capfirst }}</option>
             {% endfor %}
         </select>
 
@@ -108,13 +108,13 @@
         <select id="filterArea">
             <option value="">All</option>
             {% for value in distinct_areas %}
-                <option value="{{ value }}">{{ value }}</option>
+                <option value="{{ value }}">{{ value|capfirst }}</option>
             {% endfor %}
         </select>
     </div>
 
     <!-- Container to display reviews -->
-    <div id="reviewsContainer">
+    <div id="reviewsContainer" class="center my -auto">
       {% include 'reviews_list.html' %}
     </div>
     

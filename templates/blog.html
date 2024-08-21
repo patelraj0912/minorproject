@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog Page</title>
-    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'css/blog.css' %}"> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
@@ -16,37 +16,372 @@
 </head>
 
 <body class="blog-body">
-      <!-- navigation -->
-  {% include "navbar.html" %}
+    <!-- navigation -->
+    {% include "navbar.html" %}
  
-    <main class="content">
-        <section class="post" style="color: black;">
-            <h2 class="post-title">Blog Post Title 1</h2>
-            <p class="post-date" style="color: black;">Posted on July 22, 2024</p>
-            <p class="post-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque leo et
-                est auctor, vitae cursus justo auctor. Donec tincidunt velit quis magna scelerisque, ac malesuada leo
-                fermentum. Praesent non dictum eros. Integer a felis et dolor viverra pharetra.</p>
-        </section>
-        <section class="post" style="color: black;">
-            <h2 class="post-title">Blog Post Title 2</h2>
-            <p class="post-date" style="color: black;">Posted on July 20, 2024</p>
-            <p class="post-content">Phasellus sit amet ex nec leo cursus suscipit. Curabitur sit amet turpis ut elit
-                tristique scelerisque. Integer sed nulla dui. Suspendisse potenti. Mauris bibendum ligula vel purus
-                dapibus, et varius enim interdum. In ut lorem eget elit convallis varius a vitae nulla.</p>
-        </section>
-        <section class="post" style="color: black;">
-            <h2 class="post-title">Blog Post Title 3</h2>
-            <p class="post-date" style="color: black;">Posted on July 18, 2024</p>
-            <p class="post-content">Vivamus at ex non urna tincidunt accumsan. Proin convallis, lectus non egestas
-                scelerisque, risus eros vulputate nisi, vel euismod est quam nec elit. Nam gravida ullamcorper metus,
-                sit amet consequat ex sagittis ut. Cras sollicitudin suscipit nibh vel vulputate.</p>
-        </section>
-    </main>
 
+<!-- Add blog -->
+    {% if 'userlevel' in request.session and request.session.userlevel == "critic" %}
+    <!-- blog form button -->
+    <div class="add">
+        <p class="hd">Blog with the best.</p>
+        <p class="cn">More bloggers and independent creators choose WordPress than any other blogging tool. Tap into
+            intuitive,
+            flexible tools that put writers, bloggers, and creators first.</p>
+        <!-- Blog-Add Button -->
+        <!-- <a class="b-add" id="b-add" href="#" role="button">Start Blogging</a> -->
+        <button class="btn btn-warning b-add" type="button" data-bs-toggle="collapse" data-bs-target="#blogFormSection" aria-expanded="false" aria-controls="blogFormSection">ADD BLOG</button>
+    </div>
+
+    <!-- blog form -->
+    <section class="sbmt collapse " id="blogFormSection">
+        <h2>Submit Your Blog</h2>
+        <form id="blogForm" class="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="blogTitle" class="form-label">Dish Name</label>
+                <input type="text" class="form-control" id="dishname" name="dishname" placeholder="Enter your blog title">
+                <span id="dishnameError" class="error text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label for="blogTitle" class="form-label">Resataurant Name</label>
+                <input type="text" class="form-control" id="restaurantname" name="restaurantname" placeholder="Enter your blog title">
+                <span id="restaurantnameError" class="error text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label for="blogTitle" class="form-label">Area</label>
+                <input type="text" class="form-control" id="area" name="area" placeholder="area">
+                <span id="areaError" class="error text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label for="blogTitle" class="form-label">City</label>
+                <input type="text" class="form-control" id="city" name="city" placeholder="city">
+                <span id="cityError" class="error text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label for="blogTitle" class="form-label"> State</label>
+                <input type="text" class="form-control" id="state" name="state" placeholder="state">
+                <span id="stateError" class="error text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label for="blogContent" class="form-label">Blog Content</label>
+                <textarea class="form-control" name="blogContent" id="blogContent" rows="5" placeholder="Write your blog content here"></textarea>
+                <span id="blogContentError" class="error text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label for="blogImage" class="form-label">Blog Image</label>
+                <input class="form-control" type="file" id="blogImage" name="blogImage">
+                <span id="blogImageError" class="error text-danger"></span><br><br>
+            </div>
+            <button type="button" class="btn btn-primary" style="background:#ffaa00;border:none;" onclick="validateForm()">Submit Blog</button>
+        </form>
+    </section>
+    {% endif %}
+
+    <!-- blogs -->
+    {% include "blog_list.html" %}
+    <!-- <main class="content">
+        <section class="post">
+            <div class="row">
+                <div class="col-6">
+                    <img src="../img/Avocado-Caesar-Green-Beans-finished-1200x1200.webp" alt="Blog Post 1" class="post-img">
+                </div>
+                <div class="post-text col-6">
+                    <p class="post-date">July 22, 2024</p>
+                    <p class="post-title">Avocado Caesar Green Beans</p>
+                </div>
+            </div>
+            <div class="row">
+                <p class="post-content col-12">
+                    Grab a bag of green beans, blitz up a quick avocado caesar, toast some panko, and let’s go! This is
+                    some type of magic.
+                </p>
+            </div>
+            <div class="row">
+                {% if 'userlevel' in request.session and request.session.userlevel == "admin" %}
+                <div class="post-actions col-12">
+                    <button class="btn btn-warning btn-sm edit-btn" style="background-color: #ffaa00;">Edit</button>
+                    <button class="btn btn-danger btn-sm delete-btn">Delete</button>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+    </main> -->
 
      <!-- footer -->
-  {% include "footer.html" %}
+    {% include "footer.html" %}
     
 </body>
+    <script>
+    // Your existing validateForm() function can be here as well
+  function validateForm() {
+    // Clear previous errors
+    document.getElementById('dishnameError').innerText = '';
+    document.getElementById('restaurantnameError').innerText = '';
+    document.getElementById('areaError').innerText = '';
+    document.getElementById('cityError').innerText = '';
+    document.getElementById('stateError').innerText = '';
+    document.getElementById('blogContentError').innerText = '';
+    document.getElementById('blogImageError').innerText = '';
 
+    // Get form values
+    var dishname = document.getElementById('dishname').value.trim();
+    var restaurantname = document.getElementById('restaurantname').value.trim();
+    var area = document.getElementById('area').value.trim();
+    var city = document.getElementById('city').value.trim();
+    var state = document.getElementById('state').value.trim();
+    var description = document.getElementById('blogContent').value.trim();
+    var fileInput = document.getElementById('blogImage');
+    var filePath = fileInput.value;
+
+    // Allowed file types
+    var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+
+    var isValid = true;
+
+    if (dishname.length < 2) {
+      document.getElementById('dishnameError').innerText = "Dishname can't be empty.";
+      isValid = false;
+    }
+    if (restaurantname.length < 2 ) {
+      document.getElementById('restaurantnameError').innerText = "Restaurantname can't be empty.";
+      isValid = false;
+    }
+    if (area.length < 2) {
+      document.getElementById('areaError').innerText = 'Area must be at least 2 characters long.';
+      isValid = false;
+    }
+    if (city.length < 2) {
+      document.getElementById('cityError').innerText = 'City must be at least 2 characters long.';
+      isValid = false;
+    }
+    if (state.length < 2) {
+      document.getElementById('stateError').innerText = 'State must be at least 2 characters long.';
+      isValid = false;
+    }
+    if (description.length < 20) {
+      document.getElementById('blogContentError').innerText = 'Description must be contain atleast 20charahters.';
+      isValid = false;
+    }
+    // Check if file is selected
+    if (!fileInput.files.length) {
+        document.getElementById('blogImageError').innerText = 'Please select a file.';
+        isValid = false;
+    }
+    // Validate file type
+    if (!allowedExtensions.exec(filePath)) {
+        document.getElementById('blogImageError').innerText = 'Please upload a valid image file (JPG, JPEG, PNG, GIF).';
+        fileInput.value = '';  // Clear the input
+        isValid = false;
+    }
+
+    // If all validations pass, submit the form
+    if (isValid) {
+      document.getElementById('blogForm').submit();
+    }
+  }
+
+    </script>
+
+    <style>
+        * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background: linear-gradient(to bottom, #5d4210, #2b1d07);
+    color: rgb(0, 0, 0);
+    background-image: url("../img/th\ \(2\).jpeg");
+    background-size: cover;
+    background-position: center;
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    line-height: 1.6;
+}
+.header {
+    width: 100%;
+}
+
+
+
+.fm {
+    background: #000;
+}
+.content {
+    flex: 1;
+    padding: 20px 40px;
+}
+
+.add {
+    padding: 32px 11px;
+    margin: 0 30px;
+    color: #ffaa00d6;
+}
+
+.hd {
+    margin-top: 20px;
+    font-size: 50px;
+}
+
+.cn {
+    font-size: 22px;
+}
+
+.b-add {
+    color: #ffaa00d6;
+    background-color: transparent;
+    border: 2px solid #ffaa00d6;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    cursor: pointer;
+    
+}
+
+.b-add:hover {
+    background-color: #ffaa00;
+    color: #ffffff;
+}
+
+.sbmt {
+    margin: 10px 40px;
+    background-color: transparent;
+    display: none;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    background-color: rgb(239, 191, 143);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    color: #000000a7;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s, box-shadow 0.3s;
+
+
+}
+/* Label Styling */
+.mb-3 .form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #00000090;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+}
+
+/* Animation for Entry */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.blogform .mb-3 {
+    animation: slideIn 0.6s ease-in-out;
+}
+
+/* Subtle Glow on Hover */
+.blogform .mb-3 .form-control:hover {
+    box-shadow: 0 0 20px rgba(255, 170, 0, 0.3), inset 0 0 15px rgba(255, 255, 255, 0.1);
+}
+/* Subtle Glow on Hover */
+.mb-3 .form-control:hover {
+    box-shadow: 0 0 20px rgba(255, 170, 0, 0.3), inset 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+
+.post {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: rgba(239, 191, 143, 0.85);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    color: #000000;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.post:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+}
+
+.post-img {
+    max-width: 150px;
+    margin-right: 20px;
+    border-radius: 10px;
+    transition: transform 0.3s;
+}
+
+.post-img:hover {
+    transform: scale(1.05);
+}
+
+.post-text {
+    flex: 1;
+}
+
+.post-title {
+    margin-bottom: 10px;
+    font-size: 24px;
+    color: #000000;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.post-title:hover {
+    color: #ffaa00;
+}
+
+.post-date {
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #000000;
+}
+
+.post-content {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #000000;
+}
+/* Edit Button */
+.btn-edit {
+    background-color: #ffaa00;
+    color: #ffffff;
+}
+
+.btn-edit:hover {
+    background-color: #e69900;
+}
+
+/* Delete Button */
+.btn-delete {
+    background-color: #ff0000;
+    color: #ffffff;
+}
+
+.btn-delete:hover {
+    background-color: #cc0000;
+}
+
+    </style>
 </html>

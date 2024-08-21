@@ -97,57 +97,31 @@
   <!-- Review -->
   <div class="container mt-5" id="review_home" style="max-width: 1420px;">
     <div class="row " >
+   
+    
       <h4 class="card-title">Reviews</h4>
       <div class="horizontal-scroll-section" style="padding-left: 0;">
-        <div class="col-sm-5 scroll-item">
-          <div class="card" style="background: linear-gradient(35deg, rgba(255,249,227,1) 0%, rgba(255,255,255,1) 56%, rgba(240,248,255,1) 100%); ">
-            <div class="card-body">
-              <h5 class="card-title">Review1</h5>
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-              <a href="#" class="btn btn-primary" style="background:#ffaa00;border: none;">Read More</a>
+        {% if reviews %}
+          {% for review in reviews %}
+            <div class="col-sm-5 scroll-item">
+              <div class="card" style="background: linear-gradient(35deg, rgba(255,249,227,1) 0%, rgba(255,255,255,1) 56%, rgba(240,248,255,1) 100%); ">
+                <div class="card-body">
+                  <h5 class="card-title">{{ review.dishname|title  }}</h5>
+                  <p class="card-text">{{ review.description }}</p>
+                  <div class="row">
+                    <i class="col-6">{{ review.username }}</i>
+                    <small class="col-6" style="text-align: right;">{{ review.timestamp }}</small>
+                  </div>
+                  <!-- <a href="#" class="btn btn-primary" style="background:#ffaa00;border: none;">Read More</a> -->
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="col-sm-5 scroll-item">
-          <div class="card" style="background: linear-gradient(35deg, rgba(255,249,227,1) 0%, rgba(255,255,255,1) 56%, rgba(240,248,255,1) 100%);">
-            <div class="card-body">
-              <h5 class="card-title">Review2</h5>
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-              <a href="#" class="btn btn-primary" style="background:#ffaa00;border: none;">Read More</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-5 scroll-item">
-          <div class="card" style="background: linear-gradient(35deg, rgba(255,249,227,1) 0%, rgba(255,255,255,1) 56%, rgba(240,248,255,1) 100%);">
-            <div class="card-body">
-              <h5 class="card-title">Review3</h5>
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-              <a href="#" class="btn btn-primary" style="background:#ffaa00;border: none;">Read More</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-5 scroll-item">
-          <div class="card" style="background-color:rgba(255, 249, 243, 0.909);">
-            <div class="card-body">
-              <h5 class="card-title">Review4</h5>
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-              <a href="#" class="btn btn-primary" style="background:#ffaa00;border: none;">Read More</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-5 scroll-item">
-          <div class="card" style="background-color:rgba(255, 249, 243, 0.909);">
-            <div class="card-body">
-              <h5 class="card-title">Review5</h5>
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-              <a href="#" class="btn btn-primary" style="background:#ffaa00;border: none;">Read More</a>
-            </div>
-          </div>
-        </div>
+         {% endfor %}
+        {% endif %}
         <div class=" scroll-item" style="min-width: 125px;">
           <div class="card" style="background-color:rgba(255, 249, 243, 0.909);width: 140px;">
-            <div class="card-body" style="width: 140px;">
-              <a href="{% if username %}{% url 'review' %}{% else %}{% url 'login' %}{% endif %}" class="btn btn-primary"
+            <div class="card-body text-center" style="width: 140px;">
+              <a href="{% url 'review' %}" 
                 style="height:110px ;background: none;border: none;justify-content: center;"> <i
                   class="bi bi-chevron-double-right" style="font-size: 70px;color: #ffaa00;"></i></a>
             </div>
@@ -164,47 +138,26 @@
     <div class="blog1">
       <div class="blog-content">
         <div class="card-group" >
-          <div class="card shadow" style="margin:2%;">
-            <img src="" class="card-img-top" alt="...">
-            <div class="card-body" >
-              <h5 class="card-title">Blog1</h5>
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                additional
-                content. This content is a little bit longer.</p>
-            </div>
-            <div class="card-footer">
-              <small class="text-muted">25 September 2020</small>
-            </div>
-          </div>
-          <div class="card shadow" style="margin:2%">
-            <img src="" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">BLog2</h5>
-              <p class="card-text">This card has supporting text below as a natural lead-in to additional content.
-              </p>
-            </div>
-            <div class="card-footer">
-              <small class="text-muted">14 February 2022</small>
-            </div>
-          </div>
-          <div class="card shadow" style="margin:2%">
-            <img src="" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Blog3</h5>
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                additional
-                content. This card has even longer content than the first to show that equal height action.</p>
-            </div>
-            <div class="card-footer">
-              <small class="text-muted">31 December 2023</small>
-            </div>
-          </div>
+          {% if blogs %}
+            {% for blog in blogs %}
+              <div class="card shadow" style="margin:2%;">
+                <img src="{{ blog.dish_image }}" style="object-fit: contain;" class="card-img-top" alt="...">
+                <div class="card-body" >
+                  <h5 class="card-title">{{ blog.dish_name|title  }}</h5>
+                  <p class="card-text">{{ blog.description }}</p>
+                </div>
+                <div class="card-footer">
+                  <small class="text-muted">{{ blog.timestamp }}</small>
+                </div>
+              </div>
+            {% endfor %}
+          {% endif %}
         </div>
       </div>
     </div>
 
     <!-- login -->
-    {% if username %}
+    {% if 'username' in request.session %}
     {% else %}
     <div style="margin-top:70px;">
       <div class="loginim">

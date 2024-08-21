@@ -6,20 +6,30 @@ from django.contrib import messages
 from django.core.mail import send_mail
 import random
 import datetime
-# from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.core.files.storage import FileSystemStorage
 
+# from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 import re
 
+# database coonection 
 client = MongoClient(settings.MONGO_URI)
 db = client['pythontest']
 
 
 def home(request):
-    username = request.session.get('username', None)  # Get the username from the session if exists
-    return render(request, "home.html", {'username': username})
+    # username = request.session.get('username', None)  # Get the username from the session if exists
+    blog_collection = list(db.blogs.find({"status": "1"}).sort('timestamp', -1).limit(3))
+    review_collection = list(db.reviews.find({"status": "1"}).sort('timestamp', -1).limit(5))
+    contex ={
+        "blogs" : blog_collection,
+        "reviews" : review_collection
+    }
+    return render(request, "home.html", contex)
+
+
 
 def registration(request):
     if 'username' in request.session :
@@ -78,14 +88,71 @@ def logout(request):
     return redirect('home')
 
 
-def blog(request):
-    if 'username' not in request.session :
-        return redirect('home')
-    return render(request,'blog.html')
-
 
 def about_us(request):
     return render(request,'about_us.html')
+
+
+
+def blog(request):
+    blog_collection = db.blogs
+    if 'username' not in request.session :
+        return redirect('home')
+    
+    if request.method == "POST" :
+        username = request.session.get('username')
+        dish_name = request.POST['dishname']
+        restaurant_name = request.POST['restaurantname']
+        area = request.POST['area']
+        city = request.POST['city']
+        state = request.POST['state']
+        blogContent = request.POST['blogContent']
+        blogImage = request.FILES['blogImage']
+        blog_id = str(blog_collection.count_documents({}) + 1)
+
+        name=f'{blog_id}.jpg'
+        fs = FileSystemStorage()
+        filename = fs.save(name, blogImage)
+        file_url = fs.url(filename)
+
+        blog_collection.insert_one({
+            "blog_id": blog_id,
+            "dish_name": dish_name,
+            "restaurant_name" : restaurant_name,
+            "area":area,
+            "city":city,
+            "state":state,
+            "dish_image": file_url,
+            "description": blogContent,
+            "username": username,
+            "timestamp": datetime.datetime.now(),
+            "status" : '1'
+        })
+
+        # blog_title = request.POST['dishname']
+        return redirect('blog')
+    
+    distinct_dishnames = blog_collection.find({"status": "1"}).distinct("dish_name")
+    distinct_restaurantnames = blog_collection.find({"status": "1"}).distinct("restaurant_name")
+    distinct_cities = blog_collection.find({"status": "1"}).distinct("city")
+    distinct_areas = blog_collection.find({"status": "1"}).distinct("area")
+    distinct_state = blog_collection.find({"status": "1"}).distinct("state")
+    
+
+    # By default, display all reviews
+    blogs_list = list(blog_collection.find({"status": "1"}).sort('timestamp', -1))
+   
+    context = {
+        'blogs': blogs_list,
+        'distinct_dishnames': distinct_dishnames,
+        'distinct_restaurantnames': distinct_restaurantnames,
+        'distinct_cities': distinct_cities,
+        'distinct_areas': distinct_areas,
+        'distinct_state':distinct_state
+    }
+    return render(request,'blog.html',context)
+
+
 
 def review(request):
     review_collection = db.reviews
@@ -162,9 +229,6 @@ def filter_reviews(request):
 
     return render(request, 'reviews_list.html', {'reviews': reviews_list})
 
-
-
-
 def delete_review(request, r_id):
     if request.method == 'POST':
         db.reviews.update_one(
@@ -175,6 +239,8 @@ def delete_review(request, r_id):
         
         return redirect('review')
     return HttpResponse('Something went wrong')
+
+
 
 def forgot_password_sendotp(request):
     if request.method == 'POST':
