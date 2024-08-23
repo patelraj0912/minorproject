@@ -13,11 +13,34 @@ from django.core.files.storage import FileSystemStorage
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 import re
+from django.http import JsonResponse
 
 # database coonection 
 client = MongoClient(settings.MONGO_URI)
 db = client['pythontest']
 
+# def check_username_exists(request):
+#     if request.method == 'POST':
+#         submitted_username = request.POST.get('username')
+
+#         # Retrieve all usernames from MongoDB
+#         # if request.session.get("username") == submitted_username:
+#         #     return JsonResponse({"exists": True ,'message': 'Username is available'})
+#         usernames = db['users'].find({'username': submitted_username})
+#         if usernames.count() > 0:
+#             return JsonResponse({'exists': True,'message': 'Username already exists'})
+#         else:
+#             return JsonResponse({'exists': False,'message': 'Username is available'})
+        
+#         existing_usernames = db.users.find({}, {"_id": 0, "username": 1})
+#         username_list = [user['username'] for user in existing_usernames]
+
+#         if submitted_username in username_list:
+#             return JsonResponse({'exists': True, 'message': 'Username already exists'})
+#         else:
+#             return JsonResponse({'exists': False, 'message': 'Username is available'})
+    
+#     return HttpResponse("404 not found")
 
 def home(request):
     # username = request.session.get('username', None)  # Get the username from the session if exists
@@ -28,6 +51,81 @@ def home(request):
         "reviews" : review_collection
     }
     return render(request, "home.html", contex)
+
+
+def user_profile(request):
+    user = db['users'].find_one({'username': request.session.get('username')})
+    return render(request, "user_profile.html",{'user': user})
+
+def update_userdetails(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        area = request.POST['area']
+        city = request.POST['city']
+        state = request.POST['state']
+        db.users.update_one(
+            {"username": request.session.get('username')},
+            {"$set": {
+                "email": email,
+                "area" : area,
+                "city" : city,
+                "state" : state,
+                "lastmodify" : datetime.datetime.now()
+            }}
+        )
+        
+        return redirect('user_profile')
+    return HttpResponse("404 Not found")
+
+def update_userdpassword(request):
+    if request.method == 'POST':
+        newpassword = request.POST['newpassword']
+        # confirmpassword = request.POST['confirmpassword']
+        # if newpassword == confirmpassword:
+        db.users.update_one(
+            {"username": request.session.get('username')},
+            {"$set": {
+                "password": newpassword,
+                "lastmodify" : datetime.datetime.now()
+            }}
+        )
+        return redirect('user_profile')
+        # else:
+        #     return HttpResponse("Crash")
+    return HttpResponse("404 Not found")
+
+def my_blog(request):
+    
+    my_blogs = db.blogs.find({"$and":[{'username': request.session.get('username')},{"status": "1"}]}).sort('timestamp', -1)
+    return render(request, "my_blog.html", {'blogs': my_blogs})
+
+def delete_my_blog(request, blog_id):
+    if request.method == 'POST':
+        db.blogs.update_one(
+            {"blog_id": blog_id},
+            {"$set":{
+                "status":'0'
+            }})
+        
+        return redirect('my_blog')
+    return HttpResponse('Something went wrong')
+
+
+def my_review(request):
+    
+    my_reviews = db.reviews.find({"$and":[{'username': request.session.get('username')},{"status": "1"}]}).sort('timestamp', -1)
+    return render(request, "my_review.html", {'reviews': my_reviews})
+
+def delete_my_review(request, r_id):
+    if request.method == 'POST':
+        db.reviews.update_one(
+            {"r_id": r_id},
+            {"$set":{
+                "status":'0'
+            }})
+        
+        return redirect('my_review')
+    return HttpResponse('Something went wrong')
 
 
 
@@ -171,7 +269,7 @@ def review(request):
             'city':city,
             'description': description,
             'timestamp': datetime.datetime.now(),
-            'status' : 1
+            'status' : "1"
         }
         insert = review_collection.insert_one(review)
         if insert:
@@ -228,17 +326,6 @@ def filter_reviews(request):
     reviews_list = list(review_collection.find(query_filter))
 
     return render(request, 'reviews_list.html', {'reviews': reviews_list})
-
-def delete_review(request, r_id):
-    if request.method == 'POST':
-        db.reviews.update_one(
-            {"r_id": r_id},
-            {"$set":{
-                "status":'0'
-            }})
-        
-        return redirect('review')
-    return HttpResponse('Something went wrong')
 
 
 

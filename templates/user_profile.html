@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+   
+</head>
+<body>
+    <div class="container-fluid">
+        <p>User Profile Image(first letter of user name) : {{ request.session.username|capfirst|first }}</p>
+        <p>UserName : {{ request.session.username  }}</p>
+        <p>Usertype : {{ request.session.userlevel }}</p>
+        
+   
+        <ul>
+            <!-- update user details -->
+            <li>
+                <a href="#updateuserdetails" data-bs-toggle="collapse">update user details</a>
+                <!-- user details form -->
+                <section class="sbmt collapse " id="updateuserdetails">
+                    <form id="userdetailForm" action="{% url 'update_userdetails' %}" method="post">
+                        {% csrf_token %}
+                            <!-- <div class="mb-3">
+                                <label for="blogTitle" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="username" name="username">
+                                <span id="usernameError" class="error text-danger"></span>
+                            </div> -->
+                            <div class="mb-3">
+                                <label for="blogTitle" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}">
+                                <span id="emailError" class="error text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="blogTitle" class="form-label">Area</label>
+                                <input type="text" class="form-control" id="area" name="area" value="{{ user.area }}">
+                                <span id="areaError" class="error text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="blogTitle" class="form-label">City</label>
+                                <input type="text" class="form-control" id="city" name="city" value="{{ user.city }}">
+                                <span id="cityError" class="error text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="blogTitle" class="form-label">State</label>
+                                <input type="text" class="form-control" id="state" name="state" value="{{ user.state }}">
+                                <span id="stateError" class="error text-danger"></span>
+                            </div>
+                        <button type="button" class="btn btn-primary" onclick="validateuserdetailForm()">Update</button>
+                    </form>
+                </section>
+            </li>
+            <!-- my blog/review -->
+            <li>
+                {% if request.session.userlevel == "critic" %}
+                    <a href="{% url 'my_blog' %}">my blog</a>
+                {% endif %}
+                {% if request.session.userlevel == "user" %}
+                    <a href="{% url 'my_review' %}">my review</a>
+                {% endif %}
+            </li>
+            <!-- change password -->
+            <li>
+                <a href="#changepassword" data-bs-toggle="collapse">change password</a>
+                <section class="sbmt collapse " id="changepassword">
+                    <form id="changepasswordForm" action="{% url 'update_userdpassword' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden"  id="password" name="password" value="{{ user.password }}">
+                        <div class="mb-3">
+                            <label for="blogTitle" class="form-label">Current Password</label>
+                            <input type="text" class="form-control" id="currentpassword" name="currentpassword" >
+                            <span id="currentpasswordError" class="error text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="blogTitle" class="form-label">New Password</label>
+                            <input type="text" class="form-control" id="newpassword" name="newpassword">
+                            <span id="newpasswordError" class="error text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="blogTitle" class="form-label">Confirm Password</label>
+                            <input type="text" class="form-control" id="confirmpassword" name="currentpassword">
+                            <span id="confirmpasswordError" class="error text-danger"></span>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="validatechangepasswordForm()">changepassword</button>
+                    </form>
+                </section>
+            </li>
+            <li>
+                <a  href="{% url 'logout' %}"><div class="btn btn-danger">Logout</div></a>
+            </li>
+        </ul>
+
+        
+    </div>
+</body>
+<script>
+    function validateuserdetailForm() {
+        // Clear previous errors
+        document.getElementById('emailError').innerText = '';
+        document.getElementById('areaError').innerText = '';
+        document.getElementById('cityError').innerText = '';
+        document.getElementById('stateError').innerText = '';
+
+        // Get form values
+        var email = document.getElementById('email').value.trim();
+        var area = document.getElementById('area').value.trim();
+        var city = document.getElementById('city').value.trim();
+        var state = document.getElementById('state').value.trim();
+
+        var isValid = true;
+
+        var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            document.getElementById('emailError').innerText = 'Invalid email format.';
+            isValid = false;
+        }
+        if (area.length < 2) {
+            document.getElementById('areaError').innerText = 'Area must be at least 2 characters long.';
+            isValid = false;
+        }
+        if (city.length < 2) {
+            document.getElementById('cityError').innerText = 'City must be at least 2 characters long.';
+            isValid = false;
+        }
+        if (state.length < 2) {
+            document.getElementById('stateError').innerText = 'State must be at least 2 characters long.';
+            isValid = false;
+        }
+
+
+        // If all validations pass, submit the form
+        if (isValid) {
+            document.getElementById('userdetailForm').submit();
+        }
+    }
+
+    function validatechangepasswordForm(){
+        // Clear previous errors
+        document.getElementById('currentpasswordError').innerText = '';
+        document.getElementById('newpasswordError').innerText = '';
+        document.getElementById('confirmpasswordError').innerText = '';
+
+        // Get form values
+        var currentpassword = document.getElementById('currentpassword').value.trim();
+        var newpassword = document.getElementById('newpassword').value.trim();
+        var confirmpassword = document.getElementById('confirmpassword').value.trim();
+        var password = document.getElementById('password').value.trim();
+    
+        var isValid = true;
+
+        if (currentpassword == "" ) {
+            document.getElementById('currentpasswordError').innerText = 'CurrentPassword can not be null';
+            isValid = false;
+        }
+        else if (currentpassword != password ) {
+            document.getElementById('currentpasswordError').innerText = 'Invalid Password';
+            isValid = false;
+        }
+
+    
+         // Password validation (min 8 characters, at least one digit and one special character)
+        if (newpassword.length < 8) {
+            document.getElementById('newpasswordError').innerText = 'Password must be at least 8 characters long.';
+            isValid = false;
+        }
+        else if (!/\d/.test(newpassword)) {
+            document.getElementById('newpasswordError').innerText = 'Password must contain at least one digit.';
+            isValid = false;
+        }
+        else if (!/[!@#$%^&*(),.?":{}|<>]/.test(newpassword)) {
+            document.getElementById('newpasswordError').innerText = 'Password must contain at least one special character.';
+            isValid = false;
+        }
+        else if(password == newpassword)
+        {
+            document.getElementById('newpasswordError').innerText = 'Password can not be same as previous password.';
+            isValid = false;
+        }
+
+        if(confirmpassword == ""){
+            document.getElementById('confirmpasswordError').innerText = 'ConfirmPassword can not be null';
+            isValid = false;
+        }
+        else if(newpassword != confirmpassword){
+            document.getElementById('confirmpasswordError').innerText = 'NewPasswords and ConfirmPassword must br same.';
+            isValid = false;
+        }
+
+        // If all validations pass, submit the form
+        if (isValid) {
+            document.getElementById('changepasswordForm').submit();
+        }
+    }
+</script>
+</html>
