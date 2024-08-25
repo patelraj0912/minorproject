@@ -39,8 +39,9 @@
                         <div class="col-2">
                             
                             <div class="row ">
-                                <button class="btn btn-warning mx-auto mx-auto">Edit</button>
-                                <form action="{% url 'delete_my_blog' blog.blog_id %}" method="POST">
+                                <!-- <button class="btn btn-warning mx-auto mx-auto">Edit</button> -->
+                                <a href="{% url 'edit_my_blog' blog.b_id %}" class="btn ">Edit</a>
+                                <form action="{% url 'delete_my_blog' blog.b_id %}" method="POST">
                                     {% csrf_token %}
                                     <button class="btn btn-danger mx-auto mx-auto" type="submit" value="Delete">Delete</button>
                                 </form>

@@ -9,10 +9,7 @@ import datetime
 from django.core.files.storage import FileSystemStorage
 
 
-from django.core.exceptions import ValidationError
-from django.core.validators import validate_email
-import re
-from django.http import JsonResponse
+
 
 # database coonection 
 client = MongoClient(settings.MONGO_URI)
@@ -83,12 +80,12 @@ def my_blog(request):
     my_blogs = db.blogs.find({"$and":[{'username': request.session.get('username')},{"status": "1"}]}).sort('timestamp', -1)
     return render(request, "my_blog.html", {'blogs': my_blogs})
 
-def delete_my_blog(request, blog_id):
+def delete_my_blog(request, b_id):
     if 'username' not in request.session :
         return redirect('home')
     if request.method == 'POST':
         db.blogs.update_one(
-            {"blog_id": blog_id},
+            {"b_id": b_id},
             {"$set":{
                 "status":'0'
             }})
@@ -215,7 +212,86 @@ def delete_my_review(request, r_id):
         return redirect('my_review')
     return HttpResponse('Something went wrong')
 
+def edit_my_review(request,r_id):
+    review_collection=db.reviews
+    if 'username' not in request.session :
+        return redirect('home')
+    if request.method == 'POST':
+        dishname = request.POST['dishname']
+        restaurantname = request.POST['restaurantname']
+        area = request.POST['area']
+        city = request.POST['city']
+        description = request.POST['description']
+        review_collection.update_one(
+            {"r_id": r_id},
+            {"$set": {
+                'dishname':dishname.lower(),
+                'restaurantname':restaurantname.lower(),
+                'area':area.lower(),  
+                'city':city.lower(),
+                'description': description.lower(),
+                'lastmodify': datetime.datetime.now(),
+            }}
+        )
+        
+        return redirect('my_review')
+    review_data = review_collection.find_one({'r_id': r_id,'status':"1"})
+    return render(request,'edit_my_review.html',{'review':review_data})
 
+def edit_my_blog(request,b_id):
+    blog_collection=db.blogs
+    if 'username' not in request.session :
+        return redirect('home')
+    if request.method == 'POST':
+        dishname = request.POST['dishname']
+        restaurantname = request.POST['restaurantname']
+        area = request.POST['area']
+        city = request.POST['city']
+        state = request.POST['state']
+        description = request.POST['blogContent']
+        blog_collection.update_one(
+            {"b_id": b_id},
+            {"$set": {
+                'dish_name':dishname.lower(),
+                'restaurant_name':restaurantname.lower(),
+                'area':area.lower(),  
+                'city':city.lower(),
+                'state':state.lower(),
+                'description': description.lower(),
+                'lastmodify': datetime.datetime.now(),
+            }}
+        )
+        
+        return redirect('my_blog')
+    blog_data = blog_collection.find_one({'b_id': b_id,'status':"1"})
+    return render(request,'edit_my_blog.html',{'blog':blog_data})
+
+
+def delete_review_by_admin(request,r_id):
+    if 'username' not in request.session :
+        return redirect('home')
+    if request.method == 'POST':
+        db.reviews.update_one(
+            {"r_id": r_id},
+            {"$set":{
+                "status":"00"
+            }})
+        
+        return redirect('review')
+    return HttpResponse('Something went wrong')
+
+def delete_blog_by_admin(request,b_id):
+    if 'username' not in request.session :
+        return redirect('home')
+    if request.method == 'POST':
+        db.blogs.update_one(
+            {"b_id": b_id},
+            {"$set":{
+                "status":"00"
+            }})
+        
+        return redirect('blog')
+    return HttpResponse('Something went wrong')
 
 def registration(request):
     if 'username' in request.session :
@@ -304,15 +380,15 @@ def blog(request):
         state = request.POST['state']
         blogContent = request.POST['blogContent']
         blogImage = request.FILES['blogImage']
-        blog_id = str(blog_collection.count_documents({}) + 1)
+        b_id = str(blog_collection.count_documents({}) + 1)
 
-        name=f'{blog_id}.jpg'
+        name=f'{b_id}.jpg'
         fs = FileSystemStorage()
         filename = fs.save(name, blogImage)
         file_url = fs.url(filename)
 
         blog_collection.insert_one({
-            "blog_id": blog_id,
+            "b_id": b_id,
             "dish_name": dish_name.lower(),
             "restaurant_name" : restaurant_name.lower(),
             "area":area.lower(),

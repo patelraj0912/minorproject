@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit My Blog</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+</head>
+<body style=" height: 100%; ;background-image: linear-gradient(to left top, #487158, #548365, #619672, #6ea97f, #7cbd8c, #88c795, #94d09d, #a0daa6, #acdcae, #b7deb6, #c2e0be, #cce2c7);     ; position: relative;">
+    <!-- navigation -->
+    {% include "navbar.html" %}
+    
+    <section class="sbmt container " id="EditblogForm">
+        <h2 class="text-center">Edit Blog</h2>
+        <form id="editBlogForm" action="" method="post" >
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="blogTitle" class="form-label">Dish Name</label>
+                <input type="text" class="form-control" id="dishname" name="dishname" placeholder="Enter your blog title" value="{{ blog.dish_name }}">
+                <span id="dishnameError" class="error text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label for="blogTitle" class="form-label">Resataurant Name</label>
+                <input type="text" class="form-control" id="restaurantname" name="restaurantname" placeholder="Enter your blog title" value="{{ blog.restaurant_name }}">
+                <span id="restaurantnameError" class="error text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label for="blogTitle" class="form-label">Area</label>
+                <input type="text" class="form-control" id="area" name="area" placeholder="area" value="{{ blog.area }}">
+                <span id="areaError" class="error text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label for="blogTitle" class="form-label">City</label>
+                <input type="text" class="form-control" id="city" name="city" placeholder="city" value="{{ blog.city }}">
+                <span id="cityError" class="error text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label for="blogTitle" class="form-label"> State</label>
+                <input type="text" class="form-control" id="state" name="state" placeholder="state" value="{{ blog.state }}">
+                <span id="stateError" class="error text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label for="blogContent" class="form-label">Blog Content</label>
+                <textarea class="form-control" name="blogContent" id="blogContent" rows="5" placeholder="Write your blog content here">{{ blog.description }}</textarea>
+                <span id="blogContentError" class="error text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label for="blogImage" class="form-label">Blog Image</label><br>
+                <!-- <input class="form-control" type="file" id="blogImage" name="blogImage" value="{{ blog.dish_image }}">
+                <span id="blogImageError" class="error text-danger"></span><br><br> -->
+                <img src="{{ blog.dish_image }}" alt="">
+            </div>
+            <button type="button" class="btn btn-primary" style="background:#ffaa00;border:none;" onclick="validateForm()">Submit Blog</button>
+        </form>
+    </section>
+
+    <!-- footer -->
+    {% include "footer.html" %}
+</body>
+
+<script>
+    // Your existing validateForm() function can be here as well
+  function validateForm() {
+    // Clear previous errors
+    document.getElementById('dishnameError').innerText = '';
+    document.getElementById('restaurantnameError').innerText = '';
+    document.getElementById('areaError').innerText = '';
+    document.getElementById('cityError').innerText = '';
+    document.getElementById('stateError').innerText = '';
+    document.getElementById('blogContentError').innerText = '';
+    // document.getElementById('blogImageError').innerText = '';
+
+    // Get form values
+    var dishname = document.getElementById('dishname').value.trim();
+    var restaurantname = document.getElementById('restaurantname').value.trim();
+    var area = document.getElementById('area').value.trim();
+    var city = document.getElementById('city').value.trim();
+    var state = document.getElementById('state').value.trim();
+    var description = document.getElementById('blogContent').value.trim();
+    // var fileInput = document.getElementById('blogImage');
+    // var filePath = fileInput.value;
+
+    // Allowed file types
+    // var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+
+    var isValid = true;
+
+    if (dishname.length < 2) {
+      document.getElementById('dishnameError').innerText = "Dishname can't be empty.";
+      isValid = false;
+    }
+    if (restaurantname.length < 2 ) {
+      document.getElementById('restaurantnameError').innerText = "Restaurantname can't be empty.";
+      isValid = false;
+    }
+    if (area.length < 2) {
+      document.getElementById('areaError').innerText = 'Area must be at least 2 characters long.';
+      isValid = false;
+    }
+    if (city.length < 2) {
+      document.getElementById('cityError').innerText = 'City must be at least 2 characters long.';
+      isValid = false;
+    }
+    if (state.length < 2) {
+      document.getElementById('stateError').innerText = 'State must be at least 2 characters long.';
+      isValid = false;
+    }
+    if (description.length < 20) {
+      document.getElementById('blogContentError').innerText = 'Description must be contain atleast 20charahters.';
+      isValid = false;
+    }
+    // Check if file is selected
+    // if (!fileInput.files.length) {
+    //     document.getElementById('blogImageError').innerText = 'Please select a file.';
+    //     isValid = false;
+    // }
+    // Validate file type
+    // if (!allowedExtensions.exec(filePath)) {
+    //     document.getElementById('blogImageError').innerText = 'Please upload a valid image file (JPG, JPEG, PNG, GIF).';
+    //     fileInput.value = '';  // Clear the input
+    //     isValid = false;
+    // }
+
+    // If all validations pass, submit the form
+    if (isValid) {
+      document.getElementById('editBlogForm').submit();
+    }
+  }
+
+</script>
+
+</html>

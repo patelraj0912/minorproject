@@ -1,9 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Reviews</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
@@ -11,28 +13,22 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
-<body>
+<body style="background-image: linear-gradient(to right top, #487158, #548365, #619672, #6ea97f, #7cbd8c, #88c795, #94d09d, #a0daa6, #acdcae, #b7deb6, #c2e0be, #cce2c7);     ; position: relative;">
 <!-- navigation -->
+{% include "navbar.html" %}
 
 <!-- reviews -->
-{{reviews}}
+<div class="container">
 {% if reviews %}
     {% for review in reviews %}
         {% if review.status == "1" %}
-            <div class=" container card text-center my-5" style=" background-color:rgba(255, 249, 243, 0.909);" >
+            <div class="card text-center my-5" style=" background-color:rgba(255, 249, 243, 0.909);" >
                 <div class="card-header" style="font-weight: 600; font-size: large;text-align: left;background-color:rgba(255, 249, 243, 0.909);">
                     <div class="row">
                         <div class="col"><h5 class="card-title">{{ review.dishname|title  }}</h5></div>
                         <div class="col" style="text-align: right;">
                             <div class="d-flex" style="text-align: right;">
-                                <form action="" method="POST">
-                                    {% csrf_token %}
-                                    <input class="btn btn-primary" type="submit" value="Edit">
-                                </form>
-                                <form action="{% url 'delete_my_review' review.r_id %}" method="POST">
-                                    {% csrf_token %}
-                                    <input class="btn btn-danger" type="submit" value="Delete">
-                                </form>
+                                
                             </div>
                         </div>
                     </div>
@@ -45,9 +41,19 @@
                     <div class="col-10"><p class="ms-5">{{ review.description }}</p></div>
                 </div>
                 <div class="card-footer text-muted" style="text-align: left; background-color:rgba(255, 249, 243, 0.909);">  
-                    <div class="row">
+                    <div class="row" >
                         <div class="col">{{ review.timestamp }}</div>
-                        <div class="col" style="text-align: right;">by :<i> {{ review.username }}</i></div>
+                        <div class="col" style="text-align: right; display: inline;">
+                            <!-- <form action="" method="POST">
+                                {% csrf_token %}
+                                <input class="btn btn-primary" type="submit" value="Edit">
+                            </form> -->
+                            <a href="{% url 'edit_my_review' review.r_id %}" class="btn ">Edit</a>
+                            <form action="{% url 'delete_my_review' review.r_id %}" method="POST">
+                                {% csrf_token %}
+                                <input class="btn btn-danger" type="submit" value="Delete">
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -57,8 +63,11 @@
     <p class="card mt-5 text-center text-bg" style=" background-color:rgba(255, 249, 243, 0.909);">No reviews found.</p>
     <p>no review</p>
 {% endif %}
+</div>
+
 
 
 <!-- footer -->
+{% include "footer.html" %}
 </body>
 </html>

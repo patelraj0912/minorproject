@@ -1,0 +1,47 @@
+/* review page */
+.btn:hover {
+    background-color: #4a7766 !important;
+    border-color: #4a7766;
+    color: #ece7e2 !important;
+    /* !important is use to override the propertirs of bootstrap css */
+  }
+  
+  .fxd {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    padding: 10px 20px;
+  
+    color: #ece7e2;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1000;
+  }
+  
+  
+  .registration-link {
+    margin-top: 20px;
+    color: #4a7766;
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    text-align: center;
+  }
+  
+  .registration-link:hover {
+    text-decoration: underline;
+  }
+  
+  .modal-content {
+    background-color: rgba(0, 0, 0, 0.416) !important;
+    backdrop-filter: blur(5px);
+    color: #ffffff !important;
+  }
+  
+  .form-control {
+    background-color: transparent !important;
+  }
+  .hvr:hover{
+  color: #ffffff !important;
+  }

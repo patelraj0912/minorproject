@@ -39,16 +39,19 @@ urlpatterns = [
     path('my_blog/', views.my_blog, name='my_blog'),
     path('my_review/', views.my_review, name='my_review'),
     path('blog/',views.blog , name="blog"),
-    path('delete_my_blog/<str:blog_id>/',views.delete_my_blog , name="delete_my_blog"),
+    path('delete_my_blog/<str:b_id>/',views.delete_my_blog , name="delete_my_blog"),
     path('about_us/',views.about_us , name="about_us"),
     path('review/',views.review , name="review"),
     path('delete_my_review/<str:r_id>/',views.delete_my_review , name="delete_my_review"),
+    path('edit_my_review/<str:r_id>/',views.edit_my_review , name="edit_my_review"),
+    path('edit_my_blog/<str:b_id>/',views.edit_my_blog , name="edit_my_blog"),
+    path('delete_review_by_admin/<str:r_id>/',views.delete_review_by_admin , name="delete_review_by_admin"),
+    path('delete_blog_by_admin/<str:b_id>/',views.delete_blog_by_admin , name="delete_blog_by_admin"),
     path('delete_user/<str:u_id>/',views.delete_user , name="delete_user"),
     path('filter-reviews/', views.filter_reviews, name='filter_reviews'),
     path('filter-blogs/', views.filter_blogs, name='filter_blogs'),
     path('forgot_password_sendotp/',views.forgot_password_sendotp , name="forgot_password_sendotp"),
     path('forgot_password_verifyotp/',views.forgot_password_verifyotp , name="forgot_password_verifyotp"),
-    
 ]
 
 if settings.DEBUG:
