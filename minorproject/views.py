@@ -541,8 +541,6 @@ def filter_reviews(request):
 
 
 def forgot_password_sendotp(request):
-    if 'username' not in request.session :
-        return redirect('home')
     if request.method == 'POST':
         email=request.POST['email']
         users_collection = db.users
@@ -564,8 +562,6 @@ def forgot_password_sendotp(request):
     return render(request, 'forgot_password_sendotp.html')
 
 def forgot_password_verifyotp(request):
-    if 'username' not in request.session :
-        return redirect('home')
     if request.method == 'POST':
         otp = request.POST['otp']
         if otp == request.session.get('otp'):
