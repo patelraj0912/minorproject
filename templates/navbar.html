@@ -1,4 +1,4 @@
-<div class="container-fluid shadow mb-0 sticky-top" style="background-color: #2d3436;">
+<div class="container-fluid shadow mb-0 sticky-top" style="background-color: #2d3436; color:#ece7e2 ;">
 <nav class="navbar navbar-expand-lg ">
       <a class="navbar-brand" href="#" style="color: white">LOGO</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -11,31 +11,23 @@
             <a class="nav-link active" aria-current="page" href="{% url 'home' %}" style="padding:8px 15px; color: white; --hover-color: #16a085">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% if 'username' in request.session %}{% url 'about_us' %}{% else %}#about_us_home{% endif %}" style="padding:8px 15px;color: white;">About Us</a>
+            <a class="nav-link active" aria-current="page" href="{% url 'about_us' %}" style="padding:8px 15px;color: white;">About Us</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% if 'username' in request.session %}{% url 'review' %}{% else %}#review_home{% endif %}" style="padding:8px 15px; color: white;">Review</a>
+            <a class="nav-link active" aria-current="page" href="{% url 'review' %}" style="padding:8px 15px; color: white;">Review</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% if 'username' in request.session %}{% url 'blog' %}{% else %}#blog_home{% endif %}" style="padding:8px 15px; color: white;">Blog</a>
+            <a class="nav-link active" aria-current="page" href="{% url 'blog' %}" style="padding:8px 15px; color: white;">Blog</a>
           </li>
         </ul>
-        <!-- search -->
-        {% if 'username' in request.session %}
-        <!-- <form class="d-flex input-group w-25">
-          <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-warning"
-            type="submit"><i class="bi bi-search m-auto"></i></button>
-        </form> -->
-        {% endif %}
       </div>
 
       <!-- login -->
       <div class="mx-2">
         {% if 'username' in request.session %}
           <div >
-          <a href="{% url 'user_profile' %}"><button type="button" class="btn btn-outline-info"><i class="bi bi-person-circle"></i></button></a>
-          <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a href="{% url 'user_profile' %}"><button type="button" class="btn btn-primary bn1" style="border-width: 1px;border-color:#4a7766; background: #4a7766;color: #ece7e2"><i class="bi bi-person-circle"></i></button></a>
+          <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  style="border-width: 1px;border-color:#4a7766; background: #4a7766;color: #ece7e2">
             <span class="visually-hidden">Toggle Dropdown</span>
           </button>
           <ul class="dropdown-menu ">
@@ -45,7 +37,7 @@
           </ul>
         </div>
         {% else %}
-          <a class="btn btn-primary btn1 ms-2" href="{% url 'login' %}" style="margin-right:1%;background:#ffaa00;border: none;">
+          <a class="btn btn-primary btn1 ms-2" href="{% url 'login' %}" style="border-width: 1px;border-color:#4a7766; background: #4a7766;color: #ece7e2">
             Login
           </a>
         {% endif %}

@@ -8,7 +8,6 @@ import random
 import datetime
 from django.core.files.storage import FileSystemStorage
 
-# from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
@@ -19,28 +18,6 @@ from django.http import JsonResponse
 client = MongoClient(settings.MONGO_URI)
 db = client['pythontest']
 
-# def check_username_exists(request):
-#     if request.method == 'POST':
-#         submitted_username = request.POST.get('username')
-
-#         # Retrieve all usernames from MongoDB
-#         # if request.session.get("username") == submitted_username:
-#         #     return JsonResponse({"exists": True ,'message': 'Username is available'})
-#         usernames = db['users'].find({'username': submitted_username})
-#         if usernames.count() > 0:
-#             return JsonResponse({'exists': True,'message': 'Username already exists'})
-#         else:
-#             return JsonResponse({'exists': False,'message': 'Username is available'})
-        
-#         existing_usernames = db.users.find({}, {"_id": 0, "username": 1})
-#         username_list = [user['username'] for user in existing_usernames]
-
-#         if submitted_username in username_list:
-#             return JsonResponse({'exists': True, 'message': 'Username already exists'})
-#         else:
-#             return JsonResponse({'exists': False, 'message': 'Username is available'})
-    
-#     return HttpResponse("404 not found")
 
 def home(request):
     # username = request.session.get('username', None)  # Get the username from the session if exists
@@ -54,10 +31,14 @@ def home(request):
 
 
 def user_profile(request):
+    if 'username' not in request.session :
+        return redirect('home')
     user = db['users'].find_one({'username': request.session.get('username')})
     return render(request, "user_profile.html",{'user': user})
 
 def update_userdetails(request):
+    if 'username' not in request.session :
+        return redirect('home')
     if request.method == 'POST':
         email = request.POST['email']
         area = request.POST['area']
@@ -78,6 +59,8 @@ def update_userdetails(request):
     return HttpResponse("404 Not found")
 
 def update_userdpassword(request):
+    if 'username' not in request.session :
+        return redirect('home')
     if request.method == 'POST':
         newpassword = request.POST['newpassword']
         # confirmpassword = request.POST['confirmpassword']
@@ -95,11 +78,14 @@ def update_userdpassword(request):
     return HttpResponse("404 Not found")
 
 def my_blog(request):
-    
+    if 'username' not in request.session :
+        return redirect('home')
     my_blogs = db.blogs.find({"$and":[{'username': request.session.get('username')},{"status": "1"}]}).sort('timestamp', -1)
     return render(request, "my_blog.html", {'blogs': my_blogs})
 
 def delete_my_blog(request, blog_id):
+    if 'username' not in request.session :
+        return redirect('home')
     if request.method == 'POST':
         db.blogs.update_one(
             {"blog_id": blog_id},
@@ -110,13 +96,115 @@ def delete_my_blog(request, blog_id):
         return redirect('my_blog')
     return HttpResponse('Something went wrong')
 
+def critic_request(request):
+    if 'username' not in request.session :
+        return redirect('home')
+    if request.method=="POST":
+        u_id = request.POST['u_id']
+        email = request.POST['email']
+        db.users.update_one(
+            {"u_id": u_id},
+            {"$set":{
+                "status":'1'
+            }})
+        send_mail(
+            'Verify your Critic account',
+            f'Hey, Critic welcome to family explore restaurant or cafes and make blogs',
+            'grpcx7@gmail.com',
+            [email],
+            fail_silently=False,)
+        # return HttpResponse("activated")
+    critic_requests=db.users.find({"$and":[{"level": "critic"},{"status": "0"}]}).sort('timestamp', -1)
+    return render(request,"critic_request.html",{'critics':critic_requests})
+
+def user_list(request):
+    if 'username' not in request.session :
+        return redirect('home')
+    user_collection=db.users
+    active_users=list(user_collection.find({"$and":[{"level": "user"},{"status": "1"}]}).sort('timestamp', -1))
+    active_critics=list(user_collection.find({"$and":[{"level": "critic"},{"status": "1"}]}).sort('timestamp', -1))
+    unactive_users=list(user_collection.find({"$and":[{"level": "user"},{"status": "0"}]}).sort('timestamp', -1))
+    admin_list=list(user_collection.find({"$and":[{"level": "admin"},{"status": "1"}]}).sort('timestamp', -1))
+
+    context={
+        'active_users':active_users,
+        'active_critics':active_critics,
+        'unactive_users':unactive_users,
+        'admin_list':admin_list
+    }
+    return render(request,"user_list.html",context)
+
+def delete_user(request,u_id):
+    if 'username' not in request.session :
+        return redirect('home')
+    if request.method == 'POST':
+        db.users.update_one(
+            {"u_id": u_id},
+            {"$set":{
+                "status":'0'
+            }})
+        return redirect('user_list')
+    return HttpResponse('Opration Failed')
+
+def delete_user_account(request):
+    if 'username' not in request.session :
+        return redirect('home')
+    if request.method == 'POST':
+        u_id = request.session.get('u_id')
+        db.users.update_one(
+            {"u_id": u_id},
+            {"$set":{
+                "status":'0'
+            }})
+        return redirect('logout')
+    return HttpResponse('operation Failed')
+
+def make_admin(request,u_id):
+    if 'username' not in request.session :
+        return redirect('home')
+    if request.method == 'POST':
+        db.users.update_one(
+            {"u_id": u_id},
+            {"$set":{
+                "level":'admin'
+            }})
+        return redirect('user_list')
+    return HttpResponse('Opration Failed')
+
+def make_user(request,u_id):
+    if 'username' not in request.session :
+        return redirect('home')
+    if request.method == 'POST':
+        db.users.update_one(
+            {"u_id": u_id},
+            {"$set":{
+                "level":'user'
+            }})
+        return redirect('user_list')
+    return HttpResponse('Opration Failed')
+
+def active_user(request,u_id):
+    if 'username' not in request.session :
+        return redirect('home')
+    if request.method == 'POST':
+        db.users.update_one(
+            {"u_id": u_id},
+            {"$set":{
+                "status":'1'
+            }})
+        return redirect('user_list')
+    return HttpResponse('Opration Failed')
+
 
 def my_review(request):
-    
+    if 'username' not in request.session :
+        return redirect('home')
     my_reviews = db.reviews.find({"$and":[{'username': request.session.get('username')},{"status": "1"}]}).sort('timestamp', -1)
     return render(request, "my_review.html", {'reviews': my_reviews})
 
 def delete_my_review(request, r_id):
+    if 'username' not in request.session :
+        return redirect('home')
     if request.method == 'POST':
         db.reviews.update_one(
             {"r_id": r_id},
@@ -139,19 +227,28 @@ def registration(request):
         state = request.POST['state'].strip()
         username = request.POST['username'].strip()
         password = request.POST['password'].strip()
-    
+        usertype = request.POST['usertype']
+
+        if usertype == "critic":
+            status="0"
+        else :
+            status="1"
         user_collection = db.users
         if user_collection.find_one({"$or": [{"username": username}, {"email": email}]}):
             messages.error(request, 'Username or Email already exists')
             return redirect('registration')
-
+        # print(f'Selected gender: {usertype}')
         data={
-            'email':email,
-            'area':area,
-            'city':city,
-            'state':state,  
-            'username': username,
-            'password': password
+            'u_id':str(user_collection.count_documents({}) + 1),
+            'email':email.lower(),
+            'username': username.lower(),
+            'level':usertype.lower(),
+            'area':area.lower(),
+            'city':city.lower(),
+            'state':state.lower(),  
+            'password': password,
+            'status':status,
+            'timestamp':datetime.datetime.now(),
         }
         user_collection.insert_one(data)
         return redirect('login')
@@ -166,13 +263,14 @@ def login(request):
         password = request.POST['password']
 
         user_collection = db.users
-        user = user_collection.find_one({'username': username, 'password': password})
+        user = user_collection.find_one({'username': username, 'password': password,'status':"1"})
         
         if user:
             request.session['username'] = username
             request.session['userlevel'] = user['level']
             request.session['userarea'] = user['area']
             request.session['usercity'] = user['city']
+            request.session['u_id'] = user['u_id']
             return redirect('home')
 
         messages.error(request, 'Invalid credentials')
@@ -181,6 +279,8 @@ def login(request):
     return render(request, "user_login.html")
 
 def logout(request):
+    if 'username' not in request.session :
+        return redirect('home')
     request.session.flush()  # Clear the session
     # messages.success(request, 'You have been logged out.')
     return redirect('home')
@@ -194,8 +294,6 @@ def about_us(request):
 
 def blog(request):
     blog_collection = db.blogs
-    if 'username' not in request.session :
-        return redirect('home')
     
     if request.method == "POST" :
         username = request.session.get('username')
@@ -215,11 +313,11 @@ def blog(request):
 
         blog_collection.insert_one({
             "blog_id": blog_id,
-            "dish_name": dish_name,
-            "restaurant_name" : restaurant_name,
-            "area":area,
-            "city":city,
-            "state":state,
+            "dish_name": dish_name.lower(),
+            "restaurant_name" : restaurant_name.lower(),
+            "area":area.lower(),
+            "city":city.lower(),
+            "state":state.lower(),
             "dish_image": file_url,
             "description": blogContent,
             "username": username,
@@ -250,6 +348,43 @@ def blog(request):
     }
     return render(request,'blog.html',context)
 
+def filter_blogs(request):
+    dishname = request.GET.get('dishname', '')
+    restaurantname = request.GET.get('restaurantname', '')
+    state = request.GET.get('state', '')
+    city = request.GET.get('city', '')
+    area = request.GET.get('area', '')
+    query = request.GET.get('query', '')
+
+    blog_collection = db.blogs
+    query_filter = {"status": "1"}  # Start with the base query
+
+    # Apply filters
+    if dishname:
+        query_filter['dish_name'] = dishname
+    if restaurantname:
+        query_filter['restaurant_name'] = restaurantname
+    if state:
+        query_filter['state'] = state
+    if city:
+        query_filter['city'] = city
+    if area:
+        query_filter['area'] = area
+
+    # Apply search query to all relevant fields
+    if query:
+        query_filter['$or'] = [
+            {"dish_name": {"$regex": query, "$options": "i"}},
+            {"restaurant_name": {"$regex": query, "$options": "i"}},
+            {"state": {"$regex": query, "$options": "i"}},
+            {"city": {"$regex": query, "$options": "i"}},
+            {"area": {"$regex": query, "$options": "i"}}
+        ]
+
+    blogs_list = list(blog_collection.find(query_filter).sort('timestamp', -1))
+
+    return render(request, 'blog_list.html', {'blogs': blogs_list})
+
 
 
 def review(request):
@@ -263,11 +398,11 @@ def review(request):
         review={
             'r_id':str(review_collection.count_documents({}) + 1),
             'username' : request.session.get('username'),
-            'dishname':dishname,
-            'restaurantname':restaurantname,
-            'area':area,  
-            'city':city,
-            'description': description,
+            'dishname':dishname.lower(),
+            'restaurantname':restaurantname.lower(),
+            'area':area.lower(),  
+            'city':city.lower(),
+            'description': description.lower(),
             'timestamp': datetime.datetime.now(),
             'status' : "1"
         }
@@ -330,10 +465,12 @@ def filter_reviews(request):
 
 
 def forgot_password_sendotp(request):
+    if 'username' not in request.session :
+        return redirect('home')
     if request.method == 'POST':
         email=request.POST['email']
         users_collection = db.users
-        user = users_collection.find_one({'email': email})
+        user = users_collection.find_one({'email': email,'status':"1"})
         if user :
             generated_otp = str(random.randint(100000, 999999))
             request.session['otp'] = generated_otp
@@ -351,6 +488,8 @@ def forgot_password_sendotp(request):
     return render(request, 'forgot_password_sendotp.html')
 
 def forgot_password_verifyotp(request):
+    if 'username' not in request.session :
+        return redirect('home')
     if request.method == 'POST':
         otp = request.POST['otp']
         if otp == request.session.get('otp'):

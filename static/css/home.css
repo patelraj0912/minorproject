@@ -26,7 +26,9 @@
   vertical-align: top;
   /* Align items at the top */
 }
-
+.horizontal-scroll-section::-webkit-scrollbar{
+  display: none;
+}
 .rev {
   margin-top: 80px;
   display: flex;
@@ -44,196 +46,21 @@
   min-height: 400px;
 
 }
-
+.img1{
+  max-height: 300px;
+}
 .blog-content {
   display: flex;
-  /* background-color: rgb(251, 235, 219); */
-  backdrop-filter: blur(100px);
-  min-height: 400px;
+  /* background-color: #00000021; */
+  /* backdrop-filter: blur(100px); */
+  /* min-height: 400px; */
 }
-
-.loginim {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 600px;
-  background: url('image/1.jpg') no-repeat;
-  background-size: cover;
-  background-position: center;
+.cnt{
+  overflow: hidden;
+  height: 200px;
+   text-overflow: ellipsis;
+     overflow-y: scroll; 
 }
-
-.loginhp {
-  padding-top: 230px;
-  height: 600px;
-  width: 100%;
-  align-items: center;
-  background: #0000004e;
-  backdrop-filter: blur(3px);
-}
-
-.texth4 {
-  font-weight: 700;
-  font-size: 45px;
-  color: white;
-}
-
-.texth5 {
-  padding: 0px 0 0 0;
-  font-size: 30px;
-}
-
-.textp {
-  font-size: 16px;
-  color: white;
-  padding-top: 5px;
-}
-
-
-
-/* review page */
-.btn:hover {
-  background-color: #ffaa00 !important;
-  border-color: #ffaa00;
-  color: white !important;
-  /* !important is use to override the propertirs of bootstrap css */
-}
-
-.fxd {
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-  padding: 10px 20px;
-
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  z-index: 1000;
-}
-
-
-
-.registration-link {
-  margin-top: 20px;
-  color: #ffaa00;
-  text-decoration: none;
-  font-weight: bold;
-  display: block;
-  text-align: center;
-}
-
-.registration-link:hover {
-  text-decoration: underline;
-}
-
-.modal-content {
-  background-color: rgba(0, 0, 0, 0.416) !important;
-  backdrop-filter: blur(5px);
-  color: #ffffff !important;
-}
-
-.form-control {
-  background-color: transparent !important;
-}
-.hvr:hover{
-color: #ffffff !important;
-}
-/*  */
-input#username::placeholder{
-  color: #ffffff80 !important;
-}
-input#password::placeholder{
-  color: #ffffff80 !important;
-}
-.modal-footer{
-  border-top: none !important;
-}
-.modal-header{
-  border-bottom: none !important;
-}
-.modal-body{
-  padding: 0 16px !important;
-}
-input#fname::placeholder{
-  color:#ffffff80;
-}
-input#RDname::placeholder{
-  color:#ffffff80;
-}
-input#date::placeholder{
-  color:#ffffff80;
-}
-.footer {
-  background-color: #fef2e6;
-  color: #000000;
-  padding: 20px 0;
-  width: 100%;
-}
-
-.footer-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  max-width: 1200px;
-  margin: auto;
-  padding: 0 20px;
-  box-sizing: border-box;
-}
-
-.footer-section {
-  flex: 1;
-  min-width: 200px;
-  margin: 10px;
-}
-
-.footer-section h3 {
-  margin-top: 0;
-  margin-bottom: 10px;
-  font-size: 18px;
-}
-
-.footer-section p,
-.footer-section ul {
-  margin: 0;
-  padding: 0;
-  line-height: 1.6;
-}
-
-.footer-section ul {
-  list-style: none;
-}
-
-.footer-section ul li {
-  margin-bottom: 5px;
-}
-
-.footer-section ul li a {
-  color: #000000;
-  text-decoration: none;
-}
-
-.footer-section ul li a:hover {
-  text-decoration: underline;
-}
-
-.footer-bottom {
-  text-align: center;
-  margin-top: 20px;
-  border-top: 1px solid #444;
-  padding-top: 10px;
-}
-
-.footer-bottom p {
-  margin: 0;
-  font-size: 14px;
-}
-
-/* Responsive Styles */
-@media (max-width: 768px) {
-
-
-  .footer-container {
-      flex-direction: column;
-      align-items: center;
-  }
+.cnt::-webkit-scrollbar {
+  display: none; /* Hides the scrollbar */
 }

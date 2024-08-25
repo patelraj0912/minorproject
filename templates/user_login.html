@@ -13,12 +13,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <style>
-        .error {
-            color: red;
-            background-color: rgb(250, 193, 193)
-        }
-    </style>
 </head>
 
 <body class="user_login_body">
@@ -39,6 +33,18 @@
                 <input type="password" id="password" name="password" autocomplete="off">
                 <span id="passwordError" class="error text-danger"></span><br><br>
                 <a href="{% url 'forgot_password_sendotp' %}" class="registration-link" style="display: flex; float: right;">Forgot Password?</a><br>
+                <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Launch demo modal
+                  </button>
+                  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-body">
+                            {% include "forgot_password_sendotp.html" %}
+                        </div>
+                      </div>
+                    </div>
+                  </div> -->
             </div>
 
             <button class="login_button" type="button" onclick="validateForm()">Login</button>

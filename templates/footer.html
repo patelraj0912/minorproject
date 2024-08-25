@@ -1,100 +1,41 @@
-<footer class="footer">
-    <div class="footer-container">
-        <div class="footer-section">
-            <h3>About Us</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque leo et est auctor, vitae
-                cursus justo auctor.</p>
-        </div>
-        <div class="footer-section">
-            <h3>Quick Links</h3>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </div>
-        <div class="footer-section">
-            <h3>Contact Us</h3>
-            <p>Email: info@example.com</p>
-            <p>Phone: +123 456 7890</p>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <p>&copy; 2024 YourWebsite. All Rights Reserved.</p>
-    </div>
-</footer>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Footer</title>
+  <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+</head>
+<body>
+  <footer class="footer">
+      <div class="footer-container">
+          <div class="footer-section">
+              <h3>About Us</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque leo et est auctor, vitae
+                  cursus justo auctor.</p>
+          </div>
+          <div class="footer-section">
+              <h3>Quick Links</h3>
+              <ul>
+                  <li><a href="#">Home</a></li>
+                  <li><a href="#">About</a></li>
+                  <li><a href="#">Services</a></li>
+                  <li><a href="#">Contact</a></li>
+              </ul>
+          </div>
+          <div class="footer-section">
+              <h3>Contact Us</h3>
+              <p>Email: info@example.com</p>
+              <p>Phone: +123 456 7890</p>
+          </div>
+      </div>
+      <div class="footer-bottom">
+          <p>&copy; 2024 YourWebsite. All Rights Reserved.</p>
+      </div>
+  </footer>
+</body>
+</html>
 
 
-<style>
-    
-.footer {
-  background-color: #2d3436;
-  color: #ffffff;
-  padding: 40px 0;
-  width: 100%;
-  text-align: center;
-}
 
-.footer .footer-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  max-width: 1200px;
-  margin: auto;
-}
-
-.footer .footer-section {
-  flex: 1;
-  min-width: 250px; /* Adjusted for better responsiveness */
-  margin: 20px 0;
-}
-
-.footer h3 {
-  font-size: 20px;
-  margin-bottom: 20px;
-  color: #16a085;
-}
-
-.footer p,
-.footer ul {
-  line-height: 1.6;
-  margin: 0;
-  padding: 0;
-}
-
-.footer ul {
-  list-style: none;
-}
-
-.footer ul li {
-  margin-bottom: 10px;
-}
-
-.footer ul li a {
-  color: #ffffff;
-  text-decoration: none;
-  transition: color 0.3s;
-}
-
-.footer ul li a:hover {
-  color: #16a085;
-}
-
-.footer-bottom {
-  border-top: 1px solid #636e72;
-  padding-top: 20px;
-  margin-top: 30px;
-  font-size: 14px;
-}
-
-
-/* Responsive Styles */
-@media (max-width: 768px) {
-    .container {
-        width: 90%;
-        margin: 20px;
-        padding: 20px;
-    }
-}
-</style>

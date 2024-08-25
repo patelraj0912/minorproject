@@ -5,7 +5,7 @@
     font-family: 'Arial', sans-serif;
 }
 
-.user_reg_body {
+body {
     background: linear-gradient(to bottom, #5d4210, #2b1d07);
     display: flex;
     flex-direction: column;
@@ -13,17 +13,13 @@
     align-items: center;
     min-height: 100vh;
     color: white;
-    background-image: url('../images/backgrounds/about_us.jpg');
+    background-image: url('../images/backgrounds/about_us.jpg'); /* Replace with your background image */
     background-size: cover;
     background-position: center;
     backdrop-filter: blur(10px);
 }
-.error {
-    color: red;
-    background-color: rgb(250, 193, 193)
-}
 
-.con {
+.container {
     background-color: rgba(83, 80, 80, 0.8);
     display: flex;
     flex-direction: column;
@@ -68,12 +64,14 @@ label {
     color: #ffffff;
 }
 
-input[type="text"],
+
 input[type="email"],
-input[type="password"] {
+input[type="number"],
+input[type="password"],
+select {
     width: 100%;
     padding: 12px 12px 12px 40px;
-    margin-bottom: 2px;
+    margin-bottom: 20px;
     border: none;
     border-bottom: 2px solid #ccc;
     border-radius: 0;
@@ -84,14 +82,17 @@ input[type="password"] {
 }
 
 input[type="text"]:focus,
+input[type="password"]:focus,
 input[type="email"]:focus,
-input[type="password"]:focus {
-    border-color:#ffaa00 ;
+input[type="number"]:focus,
+
+select:focus {
+    border-color: #ffaa00;
     outline: none;
     box-shadow: 0 0 10px rgba(254, 242, 230, 0.963);
 }
 
-.reg_button {
+button {
     width: 100%;
     padding: 12px;
     background: #ffaa00;
@@ -105,9 +106,16 @@ input[type="password"]:focus {
 
 button:hover {
     background: rgba(254, 242, 230, 0.963);
-    color: #ffaa00;
     transform: translateY(-2px);
+    color: #ffaa00;
+}
 
+.notification {
+    margin-top: 20px;
+    text-align: center;
+    color: #ffaa00;
+    font-size: 14px;
+    font-style: italic;
 }
 
 

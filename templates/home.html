@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Home</title>
   <link rel="stylesheet" href="{% static 'css/home.css' %}">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
@@ -18,11 +18,9 @@
 
 </head>
 
-<body style="background-image: linear-gradient( #fef5ea 0%, #ffffdd 50%); position: relative;">
-
-  <!-- navigation -->
-  {% include "navbar.html" %}
-
+<body style="background-image: linear-gradient(to right top, #487158, #548365, #619672, #6ea97f, #7cbd8c, #88c795, #94d09d, #a0daa6, #acdcae, #b7deb6, #c2e0be, #cce2c7);     ; position: relative;">
+<!-- navigation -->
+{% include "navbar.html" %}
   <!-- slider  -->
   <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
@@ -34,22 +32,22 @@
         aria-label="Slide 3"></button>
     </div>
     <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="" class="d-block w-100" alt="...">
+      <div class="carousel-item active" style="height: 500px;">
+        <img src="image/2.jpg" class="d-block w-100" alt="...">
         <div class="carousel-caption d-none d-md-block">
           <h5>First slide label</h5>
           <p>Some representative placeholder content for the first slide.</p>
         </div>
       </div>
-      <div class="carousel-item">
-        <img src="" class="d-block w-100" alt="...">
+      <div class="carousel-item" style="height: 500px;">
+        <img src="image/slider.jpg" class="d-block w-100" alt="...">
         <div class="carousel-caption d-none d-md-block">
           <h5>Second slide label</h5>
           <p>Some representative placeholder content for the second slide.</p>
         </div>
       </div>
-      <div class="carousel-item">
-        <img src="" class="d-block w-100" alt="...">
+      <div class="carousel-item" style="height: 500px;">
+        <img src="image/slider.jpg" class="d-block w-100" alt="...">
         <div class="carousel-caption d-none d-md-block">
           <h5>Third slide label</h5>
           <p>Some representative placeholder content for the third slide.</p>
@@ -68,8 +66,8 @@
 
   <!-- About us -->
   <div class="row g-0" style="margin-top:80px;">
-    <div class="col-md-6" id="about_us_home">
-      <img style="height:400px;width:85%;margin:0 0 0 8%;" src="" class="img-fluid rounded-start"
+    <div class="col-md-6">
+      <img style="height:400px;width:85%;margin:0 0 0 8%;" src="image/aboutus.jpg" class="img-fluid rounded-start"
         alt="...">
     </div>
     <div class="col-md-6" style=" padding:0 3%;">
@@ -89,21 +87,22 @@
           nihil ad! Aspernatur vero deleniti perspiciatis, culpa nam omnis laudantium id illum pariatur quibusdam eum
           modi architecto dolorem quam?
         </p>
-        <a class="btn btn-primary" href="{% url 'about_us' %}" role="button" style="background:#ffaa00;">Read More</a>
+        <a class="btn btn-primary" href="#" role="button" style="background:#4a7766;border: none;">Read More</a>
       </div>
     </div>
   </div>
 
+
   <!-- Review -->
-  <div class="container mt-5" id="review_home" style="max-width: 1420px;">
-    <div class="row " >
-   
-    
-      <h4 class="card-title">Reviews</h4>
-      <div class="horizontal-scroll-section" style="padding-left: 0;">
+  <div class="container mt-5" style="max-width: 1450px;">
+
+
+    <div class="row ">
+      <h4 class="card-title  " id="scrollspyHeading2" style="margin-left: 0.5%;">Reviews</h4>
+      <div class="horizontal-scroll-section">
         {% if reviews %}
           {% for review in reviews %}
-            <div class="col-sm-5 scroll-item">
+            <div class="col-sm-5 scroll-item" style="min-height:110px;">
               <div class="card" style="background: linear-gradient(35deg, rgba(255,249,227,1) 0%, rgba(255,255,255,1) 56%, rgba(240,248,255,1) 100%); ">
                 <div class="card-body">
                   <h5 class="card-title">{{ review.dishname|title  }}</h5>
@@ -112,7 +111,6 @@
                     <i class="col-6">{{ review.username }}</i>
                     <small class="col-6" style="text-align: right;">{{ review.timestamp }}</small>
                   </div>
-                  <!-- <a href="#" class="btn btn-primary" style="background:#ffaa00;border: none;">Read More</a> -->
                 </div>
               </div>
             </div>
@@ -120,28 +118,30 @@
         {% endif %}
         <div class=" scroll-item" style="min-width: 125px;">
           <div class="card" style="background-color:rgba(255, 249, 243, 0.909);width: 140px;">
-            <div class="card-body text-center" style="width: 140px;">
-              <a href="{% url 'review' %}" 
-                style="height:110px ;background: none;border: none;justify-content: center;"> <i
-                  class="bi bi-chevron-double-right" style="font-size: 70px;color: #ffaa00;"></i></a>
+            <div class="card-body" style="width: 140px;">
+              <a href="{% url 'review' %}" class="btn btn-primary"
+                style="height:110px ;background: none;border: none;justify-content: center;margin-left: 5px;"> <i
+                  class="bi bi-chevron-double-right hvr" style="font-size: 70px;color: #4a7766;"></i></a>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-
   <!-- Blog -->
-  <div style="margin-top:80px; background-image: linear-gradient( #ffffdd 80%, #faf5ff 10%);">
-    <h4 style="margin:0 0 2% 3.8%;" href="" id="blog_home">Blogs</h4>
+  <div style="margin-top:30px;">
+
+
+    <h4 style="margin:0 0 2% 3.8%;" id="scrollspyHeading3">Blogs</h4>
 
     <div class="blog1">
       <div class="blog-content">
-        <div class="card-group" >
+        <div class="card-group">
+
           {% if blogs %}
             {% for blog in blogs %}
               <div class="card shadow" style="margin:2%;">
-                <img src="{{ blog.dish_image }}" style="object-fit: contain;" class="card-img-top" alt="...">
+                <img src="{{ blog.dish_image }}" class="card-img-top" alt="...">
                 <div class="card-body" >
                   <h5 class="card-title">{{ blog.dish_name|title  }}</h5>
                   <p class="card-text">{{ blog.description }}</p>
@@ -155,7 +155,6 @@
         </div>
       </div>
     </div>
-
     <!-- login -->
     {% if 'username' in request.session %}
     {% else %}
@@ -167,7 +166,7 @@
             <div class="card-body">
               <h5 class="card-title texth5" style="  color: white;">Want to join our Family?</h5>
               <p class="card-text textp">Join our family and get exclusive experience.</p>
-              <a href="{% url 'login' %}" class="btn btn-primary" style="background:#ffaa00;border: none;">Login</a>
+              <a href="{% url 'login' %}" class="btn btn-primary" style="background:#4a7766;border: none;">Login</a>
             </div>
           </div>
         </div>
@@ -175,6 +174,7 @@
     </div>
     {% endif %}
   </div>
+
 
   <!-- footer -->
   {% include "footer.html" %}

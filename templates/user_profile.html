@@ -13,13 +13,24 @@
    
 </head>
 <body>
+    {% include 'navbar.html' %}
     <div class="container-fluid">
+
         <p>User Profile Image(first letter of user name) : {{ request.session.username|capfirst|first }}</p>
         <p>UserName : {{ request.session.username  }}</p>
         <p>Usertype : {{ request.session.userlevel }}</p>
         
    
         <ul>
+            {% if request.session.userlevel == "admin" %}
+            <li>
+                <a  href="{% url 'critic_request' %}">critic request</a>
+            </li>
+            <li>
+                <a  href="{% url 'user_list' %}">users list</a>
+            </li>
+            {% endif %}
+        
             <!-- update user details -->
             <li>
                 <a href="#updateuserdetails" data-bs-toggle="collapse">update user details</a>
@@ -57,6 +68,7 @@
                 </section>
             </li>
             <!-- my blog/review -->
+            {% if request.session.userlevel != "admin" %}
             <li>
                 {% if request.session.userlevel == "critic" %}
                     <a href="{% url 'my_blog' %}">my blog</a>
@@ -65,6 +77,7 @@
                     <a href="{% url 'my_review' %}">my review</a>
                 {% endif %}
             </li>
+            {% endif %}
             <!-- change password -->
             <li>
                 <a href="#changepassword" data-bs-toggle="collapse">change password</a>
@@ -91,11 +104,19 @@
                     </form>
                 </section>
             </li>
+            <!-- logout -->
             <li>
                 <a  href="{% url 'logout' %}"><div class="btn btn-danger">Logout</div></a>
             </li>
+            <!-- delete account -->
+            <li>
+                <form action="{% url 'delete_user_account' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit"  class="btn btn-danger">Delete Account</button>
+                </form>
+            </li>
         </ul>
-
+        
         
     </div>
 </body>

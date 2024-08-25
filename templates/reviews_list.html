@@ -2,14 +2,13 @@
 {% if reviews %}
     {% for review in reviews %}
         {% if review.status == "1" %}
-            <div class=" container card text-center my-5" style=" background-color:rgba(255, 249, 243, 0.909);" >
+            <div class="card text-center my-5" style=" background-color:rgba(255, 249, 243, 0.909);" >
                 <div class="card-header" style="font-weight: 600; font-size: large;text-align: left;background-color:rgba(255, 249, 243, 0.909);">
                     <div class="row">
-                        <div class="col"><h5 class="card-title">{{ review.dishname|title  }}</h5></div>
+                        <div class="col"><h5 class="card-title" >{{ review.dishname|title  }}</h5></div>
                         <div class="col" style="text-align: right;">
                             {% if 'userlevel' in request.session and request.session.userlevel == "admin" %}
-                            <!-- <div class="btn btn-danger" href="{% url 'delete_review' review.r_id %}">Delete</div> -->
-                            <form action="{% url 'delete_review' review.r_id %}" method="POST">
+                            <form action="" method="POST">
                                 {% csrf_token %}
                                 <input class="btn btn-danger" type="submit" value="Delete">
                             </form>
@@ -19,15 +18,8 @@
                 </div>
                 <div class="card-body" style="text-align: left;background-color:rgba(255, 249, 243, 0.909);">
                     <div class="my-1">
-                    <strong>Place : </strong>
-                        {{ review.restaurantname|title   }} , {{ review.area|capfirst }} , {{ review.city|capfirst }}
-                    </div>
-                        <!-- <div class="col"> <strong>Restaurant:</strong> {{ review.restaurantname }}</div>
-                        <div class="col"><strong>Area:</strong> {{ review.area }}</div>
-                        <div class="col"><strong>City:</strong> {{ review.city }}</div> -->
-                    
-                        <!-- <div class="col-2"><strong>Description</strong></div> -->
-                        <div class="col-10"><p class="ms-5">{{ review.description }}</p></div>
+                    </div><div class="col-10"><p>{{ review.description }}</p></div>
+                    <strong>Location : </strong>{{ review.restaurantname|title   }} , {{ review.area|capfirst }} , {{ review.city|capfirst }}
                 </div>
                 <div class="card-footer text-muted" style="text-align: left; background-color:rgba(255, 249, 243, 0.909);">  
                     <div class="row">

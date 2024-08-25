@@ -13,9 +13,9 @@
 </head>
 <body>
 <!-- navigation -->
-{% include "navbar.html" %}
 
 <!-- reviews -->
+{{reviews}}
 {% if reviews %}
     {% for review in reviews %}
         {% if review.status == "1" %}
@@ -42,12 +42,7 @@
                     <strong>Place : </strong>
                         {{ review.restaurantname|title   }} , {{ review.area|capfirst }} , {{ review.city|capfirst }}
                     </div>
-                        <!-- <div class="col"> <strong>Restaurant:</strong> {{ review.restaurantname }}</div>
-                        <div class="col"><strong>Area:</strong> {{ review.area }}</div>
-                        <div class="col"><strong>City:</strong> {{ review.city }}</div> -->
-                    
-                        <!-- <div class="col-2"><strong>Description</strong></div> -->
-                        <div class="col-10"><p class="ms-5">{{ review.description }}</p></div>
+                    <div class="col-10"><p class="ms-5">{{ review.description }}</p></div>
                 </div>
                 <div class="card-footer text-muted" style="text-align: left; background-color:rgba(255, 249, 243, 0.909);">  
                     <div class="row">
@@ -60,10 +55,10 @@
     {% endfor %}
 {% else %}
     <p class="card mt-5 text-center text-bg" style=" background-color:rgba(255, 249, 243, 0.909);">No reviews found.</p>
+    <p>no review</p>
 {% endif %}
 
 
 <!-- footer -->
-{% include "footer.html" %}
 </body>
 </html>
