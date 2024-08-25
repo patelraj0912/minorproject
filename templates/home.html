@@ -141,7 +141,7 @@
           {% if blogs %}
             {% for blog in blogs %}
               <div class="card shadow" style="margin:2%;">
-                <img src="{{ blog.dish_image }}" class="card-img-top" alt="...">
+                <img src="{{ blog.dish_image }}" class="card-img-top" style="min-height: 300px; max-height: 300px;" alt="...">
                 <div class="card-body" >
                   <h5 class="card-title">{{ blog.dish_name|title  }}</h5>
                   <p class="card-text">{{ blog.description }}</p>
