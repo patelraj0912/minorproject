@@ -3,85 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title></title>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-   
+   <style>
+        .profile-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #4a7766;
+            color: white;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 3rem;
+            margin: 20px auto;
+        }
+   </style>
 </head>
-<body>
+<body style=" min-height: 100%; ;background-image: linear-gradient(to bottom , #7da88e, #72a585, #619672, #6ea97f, #7cbd8c, #88c795, #94d09d, #a0daa6, #acdcae, #b7deb6, #c2e0be, #cce2c7);     ; position: relative;">
     {% include 'navbar.html' %}
-    <div class="container-fluid">
 
-        <p>User Profile Image(first letter of user name) : {{ request.session.username|capfirst|first }}</p>
-        <p>UserName : {{ request.session.username  }}</p>
-        <p>Usertype : {{ request.session.userlevel }}</p>
-        
-   
-        <ul>
-            {% if request.session.userlevel == "admin" %}
-            <li>
-                <a  href="{% url 'critic_request' %}">critic request</a>
-            </li>
-            <li>
-                <a  href="{% url 'user_list' %}">users list</a>
-            </li>
-            {% endif %}
-        
-            <!-- update user details -->
-            <li>
-                <a href="#updateuserdetails" data-bs-toggle="collapse">update user details</a>
-                <!-- user details form -->
-                <section class="sbmt collapse " id="updateuserdetails">
-                    <form id="userdetailForm" action="{% url 'update_userdetails' %}" method="post">
-                        {% csrf_token %}
-                            <!-- <div class="mb-3">
-                                <label for="blogTitle" class="form-label">Username</label>
-                                <input type="text" class="form-control" id="username" name="username">
-                                <span id="usernameError" class="error text-danger"></span>
-                            </div> -->
-                            <div class="mb-3">
-                                <label for="blogTitle" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}">
-                                <span id="emailError" class="error text-danger"></span>
-                            </div>
-                            <div class="mb-3">
-                                <label for="blogTitle" class="form-label">Area</label>
-                                <input type="text" class="form-control" id="area" name="area" value="{{ user.area }}">
-                                <span id="areaError" class="error text-danger"></span>
-                            </div>
-                            <div class="mb-3">
-                                <label for="blogTitle" class="form-label">City</label>
-                                <input type="text" class="form-control" id="city" name="city" value="{{ user.city }}">
-                                <span id="cityError" class="error text-danger"></span>
-                            </div>
-                            <div class="mb-3">
-                                <label for="blogTitle" class="form-label">State</label>
-                                <input type="text" class="form-control" id="state" name="state" value="{{ user.state }}">
-                                <span id="stateError" class="error text-danger"></span>
-                            </div>
-                        <button type="button" class="btn btn-primary" onclick="validateuserdetailForm()">Update</button>
-                    </form>
-                </section>
-            </li>
-            <!-- my blog/review -->
-            {% if request.session.userlevel != "admin" %}
-            <li>
-                {% if request.session.userlevel == "critic" %}
-                    <a href="{% url 'my_blog' %}">my blog</a>
+    <div class="container-fluid">
+        <div class="card m-3" style="padding: 1%;">
+            <div class="row g-0">
+                <div class="col-sm-2">
+                    <div class="profile-image">
+                        {{ request.session.username|capfirst|first }}
+                    </div>
+                </div>
+                <div class="col-sm-10  ">
+                    <div class="card-body m-auto">
+                    <h4 class="card-title">{{ request.session.username|capfirst  }}</h4>
+                    <p class="card-text">{{ request.session.userlevel }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card m-3">
+            <div class="list-group">
+                {% if request.session.userlevel == "admin" %}
+                    <a  href="{% url 'critic_request' %}"  class="list-group-item list-group-item-action">Critic Request</a>
+                    <a  href="{% url 'user_list' %}"  class="list-group-item list-group-item-action">Users List</a>
                 {% endif %}
-                {% if request.session.userlevel == "user" %}
-                    <a href="{% url 'my_review' %}">my review</a>
+            
+                <!-- update user details -->
+                    <a href="#updateuserdetails" class="list-group-item list-group-item-action" data-bs-toggle="collapse">Update Personal Details</a>
+                    <!-- user details form -->
+                    <section class="container sbmt collapse " id="updateuserdetails">
+                        <form id="userdetailForm" action="{% url 'update_userdetails' %}" method="post">
+                            {% csrf_token %}
+                                <!-- <div class="mb-3">
+                                    <label for="blogTitle" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="username" name="username">
+                                    <span id="usernameError" class="error text-danger"></span>
+                                </div> -->
+                                <div class="mb-3">
+                                    <label for="blogTitle" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}">
+                                    <span id="emailError" class="error text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="blogTitle" class="form-label">Area</label>
+                                    <input type="text" class="form-control" id="area" name="area" value="{{ user.area }}">
+                                    <span id="areaError" class="error text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="blogTitle" class="form-label">City</label>
+                                    <input type="text" class="form-control" id="city" name="city" value="{{ user.city }}">
+                                    <span id="cityError" class="error text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="blogTitle" class="form-label">State</label>
+                                    <input type="text" class="form-control" id="state" name="state" value="{{ user.state }}">
+                                    <span id="stateError" class="error text-danger"></span>
+                                </div>
+                            <button type="button" class="btn btn-primary" onclick="validateuserdetailForm()">Update</button>
+                        </form>
+                    </section>
+                
+                <!-- my blog/review -->
+                {% if request.session.userlevel != "admin" %}
+                    {% if request.session.userlevel == "critic" %}
+                        <a href="{% url 'my_blog' %}" class="list-group-item list-group-item-action">My Blog</a>
+                    {% endif %}
+                    {% if request.session.userlevel == "user" %}
+                        <a href="{% url 'my_review' %}" class="list-group-item list-group-item-action">My Review</a>
+                    {% endif %}
                 {% endif %}
-            </li>
-            {% endif %}
-            <!-- change password -->
-            <li>
-                <a href="#changepassword" data-bs-toggle="collapse">change password</a>
-                <section class="sbmt collapse " id="changepassword">
+
+                <!-- change password -->
+                <a href="#changepassword" class="list-group-item list-group-item-action" data-bs-toggle="collapse">Change Password</a>
+                <section class="container sbmt collapse " id="changepassword">
                     <form id="changepasswordForm" action="{% url 'update_userdpassword' %}" method="post">
                         {% csrf_token %}
                         <input type="hidden"  id="password" name="password" value="{{ user.password }}">
@@ -103,22 +122,23 @@
                         <button type="button" class="btn btn-primary" onclick="validatechangepasswordForm()">changepassword</button>
                     </form>
                 </section>
-            </li>
-            <!-- logout -->
-            <li>
-                <a  href="{% url 'logout' %}"><div class="btn btn-danger">Logout</div></a>
-            </li>
+                
+                <!-- logout -->
+                <a  href="{% url 'logout' %}" class="list-group-item list-group-item-action list-group-item-warning">Logout</a>
+                
+            </div>
+        </div>
+
+        <div class="card m-3">
             <!-- delete account -->
-            <li>
-                <form action="{% url 'delete_user_account' %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit"  class="btn btn-danger">Delete Account</button>
-                </form>
-            </li>
-        </ul>
-        
-        
+            <form action="{% url 'delete_user_account' %}" method="post" >
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-danger w-100">Delete Account</button>
+            </form>
+        </div>
     </div>
+    {% include 'footer.html' %}
+ 
 </body>
 <script>
     function validateuserdetailForm() {
