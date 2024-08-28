@@ -2,11 +2,11 @@
 {% if reviews %}
     {% for review in reviews %}
         {% if review.status == "1" %}
-            <div class="card text-center my-5" style=" background-color:rgba(255, 249, 243, 0.909);" >
-                <div class="card-header" style="font-weight: 600; font-size: large;text-align: left;background-color:rgba(255, 249, 243, 0.909);">
+            <div class="card text-center my-5"  >
+                <div class="card-header" style="font-weight: 600; font-size: large;text-align: left;">
                     <div class="row">
                         <div class="col"><h5 class="card-title" >{{ review.dishname|title  }}</h5></div>
-                        <div class="col" style="text-align: right;">
+                        <div class="col" style="text-align: right;background-color:#fbfcf8;">
                             {% if 'userlevel' in request.session and request.session.userlevel == "admin" %}
                             <form action="{% url 'delete_review_by_admin' review.r_id %}" method="POST">
                                 {% csrf_token %}
@@ -16,12 +16,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body" style="text-align: left;background-color:rgba(255, 249, 243, 0.909);">
+                <div class="card-body" style="text-align: left;background-color:#faf9f6;">
                     <div class="my-1">
                     </div><div class="col-10"><p>{{ review.description }}</p></div>
                     <strong>Location : </strong>{{ review.restaurantname|title   }} , {{ review.area|capfirst }} , {{ review.city|capfirst }}
                 </div>
-                <div class="card-footer text-muted" style="text-align: left; background-color:rgba(255, 249, 243, 0.909);">  
+                <div class="card-footer text-muted" style="text-align: left;">  
                     <div class="row">
                         <div class="col">{{ review.timestamp }}</div>
                         <div class="col" style="text-align: right;">by :<i> {{ review.username }}</i></div>

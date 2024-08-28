@@ -76,46 +76,63 @@
       </div>
     </div>
 
-    <!-- searchbar -->
-    <input type="text" id="searchInput" placeholder="Search for reviews...">
+    <!-- filter & serachbox -->
+    <div class="container-fluid search-filter-container ">
+      <!-- searchbar -->
+        <div class="row mb-2">
+          <div class="col-12">
+            <div class="search-input-group">
+                <input type="text" id="searchInput" placeholder="Search for reviews..." class="form-control">
+                <i class="bi bi-search search-icon"></i>
+            </div>
+          </div>
+        </div>
 
-    <!-- Filter Options -->
-    <div>
-        <label for="filterDishname">Dish Name:</label>
-        <select id="filterDishname">
-            <option value="">All</option>
-            {% for value in distinct_dishnames %}
-                <option value="{{ value }}">{{ value|title }}</option>
-            {% endfor %}
-        </select>
-
-        <label for="filterRestaurantname">Restaurant Name:</label>
-        <select id="filterRestaurantname">
-            <option value="">All</option>
-            {% for value in distinct_restaurantnames %}
-                <option value="{{ value }}">{{ value|capfirst }}</option>
-            {% endfor %}
-        </select>
-
-        <label for="filterCity">City:</label>
-        <select id="filterCity">
-            <option value="">All</option>
-            {% for value in distinct_cities %}
-                <option value="{{ value }}">{{ value|capfirst }}</option>
-            {% endfor %}
-        </select>
-
-        <label for="filterArea">Area:</label>
-        <select id="filterArea">
-            <option value="">All</option>
-            {% for value in distinct_areas %}
-                <option value="{{ value }}">{{ value|capfirst }}</option>
-            {% endfor %}
-        </select>
+      <!-- Filter Options -->
+      <div class="row">
+        <!-- <div class="col-12 filter-group"> -->
+          <div class="col-3">
+          <!-- <label for="filterDishname">Dish Name:</label> -->
+            <select id="filterDishname" class="form-select form-select-sm">
+                <option value="">Dishes</option>
+                {% for value in distinct_dishnames %}
+                    <option value="{{ value }}">{{ value|title }}</option>
+                {% endfor %}
+            </select>
+          </div>
+          <div class="col-3">
+            <!-- <label for="filterRestaurantname">Restaurant Name:</label> -->
+            <select id="filterRestaurantname" class="form-select form-select-sm">
+                <option value="">Restaurant</option>
+                {% for value in distinct_restaurantnames %}
+                    <option value="{{ value }}">{{ value|capfirst }}</option>
+                {% endfor %}
+            </select>
+          </div>    
+          <div class="col-3">    
+            <!-- <label for="filterCity">City:</label> -->
+            <select id="filterCity" class="form-select form-select-sm">
+                <option value="">City</option>
+                {% for value in distinct_cities %}
+                    <option value="{{ value }}">{{ value|capfirst }}</option>
+                {% endfor %}
+            </select>
+          </div>
+          <div class="col-3">
+            <!-- <label for="filterArea">Area:</label> -->
+            <select id="filterArea" class="form-select form-select-sm">
+                <option value="">Area</option>
+                {% for value in distinct_areas %}
+                    <option value="{{ value }}">{{ value|capfirst }}</option>
+                {% endfor %}
+            </select>
+          </div>
+        <!-- </div> -->
+      </div>
     </div>
 
     <!-- Container to display reviews -->
-    <div id="reviewsContainer" class="container center my -auto">
+    <div id="reviewsContainer" class="container-fluid center">
       {% include 'reviews_list.html' %}
     </div>
     

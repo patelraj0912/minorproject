@@ -29,13 +29,13 @@ def home(request):
 
 def user_profile(request):
     if 'username' not in request.session :
-        return redirect('home')
+        return redirect('not_found_404')
     user = db['users'].find_one({'username': request.session.get('username')})
     return render(request, "user_profile.html",{'user': user})
 
 def update_userdetails(request):
     if 'username' not in request.session :
-        return redirect('home')
+        return redirect('not_found_404')
     if request.method == 'POST':
         email = request.POST['email']
         area = request.POST['area']
@@ -57,7 +57,7 @@ def update_userdetails(request):
 
 def update_userdpassword(request):
     if 'username' not in request.session :
-        return redirect('home')
+        return redirect('not_found_404')
     if request.method == 'POST':
         newpassword = request.POST['newpassword']
         # confirmpassword = request.POST['confirmpassword']
@@ -74,28 +74,11 @@ def update_userdpassword(request):
         #     return HttpResponse("Crash")
     return HttpResponse("404 Not found")
 
-def my_blog(request):
-    if 'username' not in request.session :
-        return redirect('home')
-    my_blogs = db.blogs.find({"$and":[{'username': request.session.get('username')},{"status": "1"}]}).sort('timestamp', -1)
-    return render(request, "my_blog.html", {'blogs': my_blogs})
 
-def delete_my_blog(request, b_id):
-    if 'username' not in request.session :
-        return redirect('home')
-    if request.method == 'POST':
-        db.blogs.update_one(
-            {"b_id": b_id},
-            {"$set":{
-                "status":'0'
-            }})
-        
-        return redirect('my_blog')
-    return HttpResponse('Something went wrong')
 
 def critic_request(request):
     if 'username' not in request.session :
-        return redirect('home')
+        return redirect('not_found_404')
     if request.method=="POST":
         u_id = request.POST['u_id']
         email = request.POST['email']
@@ -116,7 +99,7 @@ def critic_request(request):
 
 def user_list(request):
     if 'username' not in request.session :
-        return redirect('home')
+        return redirect('not_found_404')
     user_collection=db.users
     active_users=list(user_collection.find({"$and":[{"level": "user"},{"status": "1"}]}).sort('timestamp', -1))
     active_critics=list(user_collection.find({"$and":[{"level": "critic"},{"status": "1"}]}).sort('timestamp', -1))
@@ -133,7 +116,7 @@ def user_list(request):
 
 def delete_user(request,u_id):
     if 'username' not in request.session :
-        return redirect('home')
+        return redirect('not_found_404')
     if request.method == 'POST':
         db.users.update_one(
             {"u_id": u_id},
@@ -145,7 +128,7 @@ def delete_user(request,u_id):
 
 def delete_user_account(request):
     if 'username' not in request.session :
-        return redirect('home')
+        return redirect('not_found_404')
     if request.method == 'POST':
         u_id = request.session.get('u_id')
         db.users.update_one(
@@ -158,7 +141,7 @@ def delete_user_account(request):
 
 def make_admin(request,u_id):
     if 'username' not in request.session :
-        return redirect('home')
+        return redirect('not_found_404')
     if request.method == 'POST':
         db.users.update_one(
             {"u_id": u_id},
@@ -170,7 +153,7 @@ def make_admin(request,u_id):
 
 def make_user(request,u_id):
     if 'username' not in request.session :
-        return redirect('home')
+        return redirect('not_found_404')
     if request.method == 'POST':
         db.users.update_one(
             {"u_id": u_id},
@@ -182,7 +165,7 @@ def make_user(request,u_id):
 
 def active_user(request,u_id):
     if 'username' not in request.session :
-        return redirect('home')
+        return redirect('not_found_404')
     if request.method == 'POST':
         db.users.update_one(
             {"u_id": u_id},
@@ -193,15 +176,17 @@ def active_user(request,u_id):
     return HttpResponse('Opration Failed')
 
 
+
+
 def my_review(request):
     if 'username' not in request.session :
-        return redirect('home')
+        return redirect('not_found_404')
     my_reviews = db.reviews.find({"$and":[{'username': request.session.get('username')},{"status": "1"}]}).sort('timestamp', -1)
     return render(request, "my_review.html", {'reviews': my_reviews})
 
 def delete_my_review(request, r_id):
     if 'username' not in request.session :
-        return redirect('home')
+        return redirect('not_found_404')
     if request.method == 'POST':
         db.reviews.update_one(
             {"r_id": r_id},
@@ -215,7 +200,7 @@ def delete_my_review(request, r_id):
 def edit_my_review(request,r_id):
     review_collection=db.reviews
     if 'username' not in request.session :
-        return redirect('home')
+        return redirect('not_found_404')
     if request.method == 'POST':
         dishname = request.POST['dishname']
         restaurantname = request.POST['restaurantname']
@@ -238,10 +223,30 @@ def edit_my_review(request,r_id):
     review_data = review_collection.find_one({'r_id': r_id,'status':"1"})
     return render(request,'edit_my_review.html',{'review':review_data})
 
+
+def my_blog(request):
+    if 'username' not in request.session :
+        return redirect('not_found_404')
+    my_blogs = db.blogs.find({"$and":[{'username': request.session.get('username')},{"status": "1"}]}).sort('timestamp', -1)
+    return render(request, "my_blog.html", {'blogs': my_blogs})
+
+def delete_my_blog(request, b_id):
+    if 'username' not in request.session :
+        return redirect('not_found_404')
+    if request.method == 'POST':
+        db.blogs.update_one(
+            {"b_id": b_id},
+            {"$set":{
+                "status":'0'
+            }})
+        
+        return redirect('my_blog')
+    return HttpResponse('Something went wrong')
+
 def edit_my_blog(request,b_id):
     blog_collection=db.blogs
     if 'username' not in request.session :
-        return redirect('home')
+        return redirect('not_found_404')
     if request.method == 'POST':
         dishname = request.POST['dishname']
         restaurantname = request.POST['restaurantname']
@@ -267,9 +272,12 @@ def edit_my_blog(request,b_id):
     return render(request,'edit_my_blog.html',{'blog':blog_data})
 
 
+
+
+
 def delete_review_by_admin(request,r_id):
     if 'username' not in request.session :
-        return redirect('home')
+        return redirect('not_found_404')
     if request.method == 'POST':
         db.reviews.update_one(
             {"r_id": r_id},
@@ -282,7 +290,7 @@ def delete_review_by_admin(request,r_id):
 
 def delete_blog_by_admin(request,b_id):
     if 'username' not in request.session :
-        return redirect('home')
+        return redirect('not_found_404')
     if request.method == 'POST':
         db.blogs.update_one(
             {"b_id": b_id},
@@ -292,6 +300,10 @@ def delete_blog_by_admin(request,b_id):
         
         return redirect('blog')
     return HttpResponse('Something went wrong')
+
+
+
+
 
 def registration(request):
     if 'username' in request.session :
@@ -356,9 +368,8 @@ def login(request):
 
 def logout(request):
     if 'username' not in request.session :
-        return redirect('home')
+        return redirect('not_found_404')
     request.session.flush()  # Clear the session
-    # messages.success(request, 'You have been logged out.')
     return redirect('home')
 
 
@@ -541,6 +552,8 @@ def filter_reviews(request):
 
 
 def forgot_password_sendotp(request):
+    if 'username' in request.session :
+        return redirect('home')
     if request.method == 'POST':
         email=request.POST['email']
         users_collection = db.users
@@ -557,11 +570,14 @@ def forgot_password_sendotp(request):
             fail_silently=False,)
             return redirect('forgot_password_verifyotp')
         else :
+            messages.error(request, 'Invalid Email')
             return redirect('forgot_password_sendotp')
         
     return render(request, 'forgot_password_sendotp.html')
 
 def forgot_password_verifyotp(request):
+    if 'username' in request.session :
+        return redirect('home')
     if request.method == 'POST':
         otp = request.POST['otp']
         if otp == request.session.get('otp'):
@@ -576,6 +592,11 @@ def forgot_password_verifyotp(request):
                 del request.session['email']
                 return redirect("login")
             else :
-                return HttpResponse("Password and Confirm Password must be same")
-        return HttpResponse("OTP not match")
+                messages.error(request, 'Password and Confirm Password does not match')
+                return redirect('forgot_password_verifyotp')
+        messages.error(request, 'Invalid OTP')
+        return redirect('forgot_password_verifyotp')
     return render(request,'forgot_password_verifyotp.html')
+
+def not_found_404(request):
+    return render(request,"404_not_found.html")

@@ -16,11 +16,11 @@
 
 </head>
 
-</head>
 
 <body style="background-image: linear-gradient(to right top, #487158, #548365, #619672, #6ea97f, #7cbd8c, #88c795, #94d09d, #a0daa6, #acdcae, #b7deb6, #c2e0be, #cce2c7);     ; position: relative;">
-<!-- navigation -->
-{% include "navbar.html" %}
+  <!-- navigation -->
+  {% include "navbar.html" %}
+
   <!-- slider  -->
   <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
@@ -73,21 +73,13 @@
     <div class="col-md-6" style=" padding:0 3%;">
       <div class="card-body">
         <h4 class="card-title">About Us</h4>
-        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem nam sunt alias doloribus
-          culpa velit architecto non. Nesciunt velit ut eveniet cum ipsa, unde sequi voluptas sapiente aperiam, nemo
-          aspernatur tempore sit, dolorum ad. Libero nisi ab officia quasi sequi eius soluta, officiis totam obcaecati
-          ratione nostrum rerum amet, quidem doloremque? Perspiciatis obcaecati enim praesentium alias, iusto quaerat
-          numquam, molestiae deleniti hic, quam fuga id in. Officiis, inventore. Qui, quae! Architecto corrupti
-          facilis
-          nesciunt rem dicta cumque debitis aperiam non praesentium eligendi, eveniet, doloremque autem, laudantium ad
-          eos! Illum maxime, ratione magnam reiciendis autem nesciunt doloremque deserunt facere assumenda ad eius
-          officiis cum vel molestiae beatae minus saepe veniam, nemo accusantium. Suscipit nostrum, eaque nulla ullam
-          possimus repellat porro minima. Sed iusto perferendis doloremque veritatis deserunt in, nam laborum, qui,
-          unde
-          nihil ad! Aspernatur vero deleniti perspiciatis, culpa nam omnis laudantium id illum pariatur quibusdam eum
-          modi architecto dolorem quam?
-        </p>
-        <a class="btn btn-primary" href="#" role="button" style="background:#4a7766;border: none;">Read More</a>
+        <div class="card-text">
+          <h5>Welcome to <strong>[Your Company Name]!</strong></h5>
+          <p>At [Your Company Name], our mission is to [briefly describe your core mission or what you offer]. Since [year], we’ve been [describe what sets you apart or your unique approach].</p>
+          <p>Our team of [mention your team’s expertise or size] is dedicated to [highlight your commitment, e.g., "providing exceptional service" or "delivering high-quality products"]. We pride ourselves on [mention a core value, e.g., "innovation" or "customer satisfaction"], ensuring that every [product/service] meets our high standards.</p>
+          <p>Discover how [Your Company Name] can [mention the benefit to the customer, e.g., "enhance your experience" or "meet your needs"]. Thank you for visiting!</p>
+        </div>
+        <a class="btn btn-primary" href="{% url 'about_us' %}" role="button" style="background:#4a7766;border: none;">Read More</a>
       </div>
     </div>
   </div>
@@ -128,6 +120,7 @@
       </div>
     </div>
   </div>
+
   <!-- Blog -->
   <div style="margin-top:30px;">
 
@@ -144,7 +137,7 @@
                 <img src="{{ blog.dish_image }}" class="card-img-top" style="min-height: 300px; max-height: 300px;" alt="...">
                 <div class="card-body" >
                   <h5 class="card-title">{{ blog.dish_name|title  }}</h5>
-                  <p class="card-text">{{ blog.description }}</p>
+                  <p class="card-text cnt">{{ blog.description }}</p>
                 </div>
                 <div class="card-footer">
                   <small class="text-muted">{{ blog.timestamp }}</small>

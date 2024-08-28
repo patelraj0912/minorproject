@@ -52,6 +52,7 @@ urlpatterns = [
     path('filter-blogs/', views.filter_blogs, name='filter_blogs'),
     path('forgot_password_sendotp/',views.forgot_password_sendotp , name="forgot_password_sendotp"),
     path('forgot_password_verifyotp/',views.forgot_password_verifyotp , name="forgot_password_verifyotp"),
+    path('not_found_404/',views.not_found_404 , name="not_found_404"),
 ]
 
 if settings.DEBUG:

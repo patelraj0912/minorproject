@@ -2,8 +2,34 @@
 
 {% if blogs %}
     {% for blog in blogs %}
+    <div class="content">
+    <section class="post mx-3 mt-3">
+        <img src="{{ blog.dish_image }}" alt="Blog Post " class="post-img">
+        <div class="post-text">
+            {% if 'userlevel' in request.session and request.session.userlevel == "admin" %}
+            <strong>Blog ID : {{ blog.b_id }}</strong>
+            {% endif %}
+            <p class="post-date"><small>{{ blog.timestamp }}</small></p>
+            <p class="post-title"><h3>{{ blog.dish_name|title  }}</h3></p>
+            <p class="post-content">
+                {{ blog.description }}
+            </p>
+            <p class="post-author"><strong>Author:</strong>{{ blog.username }}</p>
+            <p class="post-restaurant"><strong>Restaurant:</strong> {{ blog.restaurant_name|title   }}</p>
+            <p class="post-place"><strong>Place:</strong>  {{ blog.area|capfirst }} , {{ blog.city|capfirst }} , {{ blog.state|capfirst }}</p>
         
-            <div class="blog-content">
+        {% if 'userlevel' in request.session and request.session.userlevel == "admin" %}
+        <div class="row ">
+            <form action="{% url 'delete_blog_by_admin' blog.b_id %}" method="POST">
+                {% csrf_token %}
+                <input class="btn btn-danger" type="submit" value="Delete">
+            </form>
+        </div>
+        {% endif %}
+    </div>
+    </section>
+</div>
+            <!-- <div class="blog-content">
                 <div class="card post">
                     <div class="card-body">
                         <div class="row">
@@ -20,7 +46,6 @@
                             <div class="col-2">
                                 {% if 'userlevel' in request.session and request.session.userlevel == "admin" %}
                                 <div class="row ">
-                                    <!-- <button class="btn btn-warning mx-auto mx-auto">Edit</button> -->
                                     <form action="{% url 'delete_blog_by_admin' blog.b_id %}" method="POST">
                                         {% csrf_token %}
                                         <input class="btn btn-danger" type="submit" value="Delete">
@@ -36,7 +61,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         
     {% endfor %}
     {% else %}

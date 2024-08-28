@@ -19,6 +19,11 @@ body {
     backdrop-filter: blur(10px);
 }
 
+.error {
+    color: red;
+    background-color: rgb(250, 193, 193)
+}
+
 .container {
     background-color: rgba(83, 80, 80, 0.8);
     display: flex;

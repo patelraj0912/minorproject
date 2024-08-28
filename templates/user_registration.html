@@ -17,15 +17,11 @@
 </head>
 
 <body class="user_reg_body">
+    
     <div class="container con" style="width: 70%;">
         <h2>User Registration</h2>
         <form id="registrationForm" method="post" style="width: 84%;">
             {% csrf_token %}
-            <!-- <div class="form-group">
-                <label for="name">Name:</label>
-                <i class="bi bi-person-fill"></i>
-                <input type="text" id="name" name="name" >
-            </div> -->
             <div class="form-group">
                 <label for="username">Username:</label>
                 <i class="bi bi-person-circle mb-2"></i>
@@ -91,9 +87,7 @@
             
         </form>
     </div>
-    
-
-
+   
 </body>
 <script>
     function validateForm() {

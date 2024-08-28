@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Blog</title>
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
@@ -39,12 +40,15 @@
                         <div class="col-2">
                             
                             <div class="row ">
-                                <!-- <button class="btn btn-warning mx-auto mx-auto">Edit</button> -->
-                                <a href="{% url 'edit_my_blog' blog.b_id %}" class="btn ">Edit</a>
-                                <form action="{% url 'delete_my_blog' blog.b_id %}" method="POST">
-                                    {% csrf_token %}
-                                    <button class="btn btn-danger mx-auto mx-auto" type="submit" value="Delete">Delete</button>
-                                </form>
+                                <div class="col-6 ">
+                                    <a href="{% url 'edit_my_blog' blog.b_id %}" class="btn btn-info w-100">Edit</a>
+                                </div>
+                                <div class="col-6 ">
+                                    <form action="{% url 'delete_my_blog' blog.b_id %}" method="POST">
+                                        {% csrf_token %}
+                                        <button class="btn btn-danger w-100" type="submit" value="Delete">Delete</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -66,18 +70,5 @@
 <!-- footer -->
 {% include "footer.html" %}
 </body>
-<style>
-    .blog-body {
-        background-image: linear-gradient(to right top, #487158, #548365, #619672, #6ea97f, #7cbd8c, #88c795, #94d09d, #a0daa6, #acdcae, #b7deb6, #c2e0be, #cce2c7);
-        color: #2d3436;
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-        line-height: 1.6;
-    }
-    .blog-content {
-        flex: 1;
-        padding: 40px 60px;
-    }
-</style>
+
 </html>

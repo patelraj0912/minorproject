@@ -14,6 +14,7 @@
     <!-- navigation -->
     {% include "navbar.html" %}
     
+    <!-- edit review form -->
     <div class="container mt-5 mb-5">
         <form id="EditreviewForm" action="" method="post">
             {% csrf_token %}
@@ -48,10 +49,17 @@
                 <textarea name="description" id="description" class="form-control" cols="30" rows="4" placeholder="Write Review">{{ review.description }}</textarea>
                 <span id="descriptionError" class="error text-danger"></span><br>
               </div>
+              <div class="mb-3">
+                {% if review.lastmodify %}
+                <b>Last Modify on :</b><i><small>{{ review.lastmodify }}</small></i>
+                {% else %}
+                <b>Upload on :</b><i><small>{{ review.timestamp }}</small></i>
+                {% endif %}
+              </div>
            
             
             <div class="modal-footer">
-              <button type="button" class="btn btn-info" style="background-color: #ffaa00 ;border: #ffaa00;" onclick="validateForm()">Update</button>
+              <button type="button" class="btn btn-info m-3" style="background-color: #ffaa00 ;border: #ffaa00;" onclick="validateForm()">Update</button>
             </div>
           </form>
     </div>
@@ -107,5 +115,5 @@
     }
   }
 </script>
-</script>
+
 </html>

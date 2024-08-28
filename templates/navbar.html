@@ -1,4 +1,4 @@
-<div class="container-fluid shadow mb-0 sticky-top" style="background-color: #2d3436; color:#ece7e2 ;">
+<div class="container-fluid shadow mb-0 sticky-top " data-bs-theme="dark" style="background-color: #2d3436; color:#ece7e2 ;">
 <nav class="navbar navbar-expand-lg ">
       <a class="navbar-brand" href="#" style="color: white">LOGO</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -25,15 +25,29 @@
       <!-- login -->
       <div class="mx-2">
         {% if 'username' in request.session %}
-          <div >
+          <div class="dropdown">
           <a href="{% url 'user_profile' %}"><button type="button" class="btn btn-primary bn1" style="border-width: 1px;border-color:#4a7766; background: #4a7766;color: #ece7e2"><i class="bi bi-person-circle"></i></button></a>
           <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  style="border-width: 1px;border-color:#4a7766; background: #4a7766;color: #ece7e2">
-            <span class="visually-hidden">Toggle Dropdown</span>
+            <!-- <span class="visually-hidden">Toggle Dropdown</span> -->
           </button>
-          <ul class="dropdown-menu ">
-            <li><p>Hello, {{ request.session.username }}</p></li>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><p  class="dropdown-iteam">Hello, {{ request.session.username }}</p></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a href="{% url 'logout' %}">Logout</a></li>
+            <li>
+            <!-- my blog/review -->
+            {% if request.session.userlevel != "admin" %}
+              {% if request.session.userlevel == "critic" %}
+                  <a href="{% url 'my_blog' %}" class="dropdown-item">My Blog</a>
+                  <li><hr class="dropdown-divider"></li>
+              {% endif %}
+              {% if request.session.userlevel == "user" %}
+                  <a href="{% url 'my_review' %}" class="dropdown-item">My Review</a>
+                  <li><hr class="dropdown-divider"></li>
+              {% endif %}
+            {% endif %}
+            </li>
+            
+            <li ><a href="{% url 'logout' %}" class="dropdown-item">Logout</a></li>
           </ul>
         </div>
         {% else %}

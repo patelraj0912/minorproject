@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog Page</title>
-    <!-- <link rel="stylesheet" href="{% static 'css/blog.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
@@ -70,7 +70,7 @@
             <div class="mb-3">
                 <label for="blogImage" class="form-label" >Blog Image</label>
                 <input class="form-control" type="file" id="blogImage" name="blogImage">
-                <small class="text-warning">*Image can't be chnage after Submit the blog</small><br>
+                <small class="text-info">*Image can't be chnage after Submit the blog</small><br>
                 <span id="blogImageError" class="error text-danger"></span><br><br>
             </div>
             <button type="button" class="btn btn-primary" style="background:#ffaa00;border:none;" onclick="validateForm()">Submit Blog</button>
@@ -78,46 +78,72 @@
     </section>
     {% endif %}
 
-    <!-- Filters -->
-    <div class="filter">
+    <!-- Filters & Search-->
+    <div class="container-fluid search-filter-container ">
+        <!-- Search Input -->
+        <div class="row mb-1 ">
+            <div class="col-12">
+                <div class="search-input-group">
+                    <input type="text" id="searchInput" placeholder="Search for reviews..." class="form-control">
+                    <i class="bi bi-search search-icon"></i>
+                </div>
+            </div>
+        </div>
     
-    <select id="filterDishname">
-        <option value="">All Dishes</option>
-        {% for dishname in distinct_dishnames %}
-        <option value="{{ dishname }}">{{ dishname }}</option>
-        {% endfor %}
-    </select>
+        <!-- filters -->
+        <div class="row">
 
-    <select id="filterRestaurantname">
-        <option value="">All Restaurants</option>
-        {% for restaurantname in distinct_restaurantnames %}
-        <option value="{{ restaurantname }}">{{ restaurantname }}</option>
-        {% endfor %}
-    </select>
+            <div class="col-3">
+            <!-- <label for="filterDishname">Dish Name:</label> -->
+                <select class="form-select form-select-sm" id="filterDishname">
+                    <option value="">Dishes</option>
+                    {% for dishname in distinct_dishnames %}
+                    <option value="{{ dishname }}">{{ dishname }}</option>
+                    {% endfor %}
+                </select>
+            </div>
 
-    <select id="filterState">
-        <option value="">All States</option>
-        {% for state in distinct_state %}
-        <option value="{{ state }}">{{ state }}</option>
-        {% endfor %}
-    </select>
+            <div class="col-3">
+            <!-- <label for="filterDishname">Dish Name:</label> -->
+                <select id="filterRestaurantname" class="form-select form-select-sm">
+                    <option value="">Restaurants</option>
+                    {% for restaurantname in distinct_restaurantnames %}
+                    <option value="{{ restaurantname }}">{{ restaurantname }}</option>
+                    {% endfor %}
+                </select>
+            </div>
 
-    <select id="filterCity">
-        <option value="">All Cities</option>
-        {% for city in distinct_cities %}
-        <option value="{{ city }}">{{ city }}</option>
-        {% endfor %}
-    </select>
+            <div class="col-2">
+                <!-- <label for="filterDishname">Dish Name:</label> -->
+                <select id="filterState" class="form-select form-select-sm">
+                    <option value="">States</option>
+                    {% for state in distinct_state %}
+                    <option value="{{ state }}">{{ state }}</option>
+                    {% endfor %}
+                </select>
+            </div>
 
-    <select id="filterArea">
-        <option value="">All Areas</option>
-        {% for area in distinct_areas %}
-        <option value="{{ area }}">{{ area }}</option>
-        {% endfor %}
-    </select>
+            <div class="col-2">
+                <!-- <label for="filterDishname">Dish Name:</label> -->
+                <select id="filterCity" class="form-select form-select-sm">
+                    <option value="">Cities</option>
+                    {% for city in distinct_cities %}
+                    <option value="{{ city }}">{{ city }}</option>
+                    {% endfor %}
+                </select>
+            </div>
 
-    <!-- Search Input -->
-    <input type="text" id="searchInput" placeholder="Search blogs...">
+            <div class="col-2">
+                <!-- <label for="filterDishname">Dish Name:</label> -->
+                <select id="filterArea" class="form-select form-select-sm">
+                    <option value="">Areas</option>
+                    {% for area in distinct_areas %}
+                    <option value="{{ area }}">{{ area }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
     </div>
 
     <!-- blogs -->
@@ -235,184 +261,4 @@
   }
 
     </script>
-
-    <style>
-    * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    body {
-        background-image: linear-gradient(to right top, #487158, #548365, #619672, #6ea97f, #7cbd8c, #88c795, #94d09d, #a0daa6, #acdcae, #b7deb6, #c2e0be, #cce2c7);
-        color: #2d3436;
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-        line-height: 1.6;
-    }
-    .blog-content {
-        flex: 1;
-        padding: 40px 60px;
-    }
-
-    .blog-add {
-        background-color: #4a7766;
-        padding: 60px 40px;
-        color: #ece7e2;
-        text-align: center;
-        border-bottom-left-radius: 15px;
-        border-bottom-right-radius: 15px;
-        margin-bottom: 40px;
-    }
-
-    .hd {
-        font-size: 48px;
-        margin-bottom: 20px;
-        font-weight: bold;
-    }
-
-    .cn {
-        font-size: 20px;
-        margin-bottom: 30px;
-    }
-
-    .b-add {
-        color: #16a085;
-        background-color: #ffffff;
-        border: 2px solid #ffffff;
-        padding: 12px 25px;
-        border-radius: 25px;
-        font-size: 18px;
-        text-transform: uppercase;
-        transition: background-color 0.3s ease, color 0.3s ease;
-        cursor: pointer;
-    }
-
-    .b-add:hover {
-        background-color: #ffffff;
-        color: #16a085;
-    }
-    .sbmt {
-    background-color: #ffffff;
-    padding: 40px 30px;
-    border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    margin-bottom: 40px;
-}
-
-.sbmt h2 {
-    margin-bottom: 30px;
-    font-size: 32px;
-    color: #16a085;
-}
-
-.mb-3 {
-    margin-bottom: 20px;
-}
-
-.mb-3 .form-label {
-    font-weight: bold;
-    color: #2d3436;
-    font-size: 16px;
-    margin-bottom: 8px;
-    display: block;
-}
-
-.mb-3 .form-control {
-    width: 100%;
-    padding: 15px;
-    border: 2px solid #16a085;
-    border-radius: 8px;
-    font-size: 16px;
-    transition: border 0.3s ease;
-    background-color: #f7f7f7;
-}
-
-.mb-3 .form-control:focus {
-    border-color: #2ecc71;
-    outline: none;
-}
-
-.mb-3 input[type="file"] {
-    padding: 10px 15px;
-    font-size: 14px;
-    border: 2px solid #16a085;
-    border-radius: 8px;
-    background-color: #f7f7f7;
-    cursor: pointer;
-    transition: border 0.3s ease;
-}
-
-.sbmt button {
-    background-color: #16a085;
-    color: #ffffff;
-    padding: 12px 30px;
-    border: none;
-    border-radius: 25px;
-    font-size: 18px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.sbmt button:hover {
-    background-color: #2ecc71;
-}
-
-.post {
-    background-color: #ffffff;
-    padding: 20px 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    margin-bottom: 30px;
-    display: flex;
-    align-items: center;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.post:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
-}
-
-.post-img {
-    max-width: 150px;
-    margin-right: 25px;
-    border-radius: 8px;
-    transition: transform 0.3s;
-}
-
-.post-img:hover {
-    transform: scale(1.05);
-}
-
-.post-text {
-    flex: 1;
-}
-
-.post-title {
-    font-size: 22px;
-    color: #2d3436;
-    margin-bottom: 15px;
-    transition: color 0.3s;
-}
-
-.post-title:hover {
-    color: #16a085;
-}
-
-.post-date {
-    font-size: 14px;
-    color: #636e72;
-    margin-bottom: 10px;
-}
-
-.post-content {
-    font-size: 16px;
-    color: #2d3436;
-    line-height: 1.6;
-}
-
-    </style>
 </html>

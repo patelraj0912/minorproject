@@ -14,6 +14,7 @@
     <!-- navigation -->
     {% include "navbar.html" %}
     
+    <!-- edit blog form -->
     <section class="sbmt container " id="EditblogForm">
         <h2 class="text-center">Edit Blog</h2>
         <form id="editBlogForm" action="" method="post" >
@@ -52,7 +53,14 @@
                 <label for="blogImage" class="form-label">Blog Image</label><br>
                 <!-- <input class="form-control" type="file" id="blogImage" name="blogImage" value="{{ blog.dish_image }}">
                 <span id="blogImageError" class="error text-danger"></span><br><br> -->
-                <img src="{{ blog.dish_image }}" alt="">
+                <img src="{{ blog.dish_image }}" height="150px" width="150px" alt="">
+            </div>
+            <div class="mb-3">
+              {% if blog.lastmodify %}
+              <b>Last Modify on :</b><i><small>{{ blog.lastmodify }}</small></i>
+              {% else %}
+              <b>Upload on :</b><i><small>{{ blog.timestamp }}</small></i>
+              {% endif %}
             </div>
             <button type="button" class="btn btn-primary" style="background:#ffaa00;border:none;" onclick="validateForm()">Submit Blog</button>
         </form>
