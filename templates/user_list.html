@@ -11,7 +11,7 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
-<body>
+<body style="background-color: rgb(238, 248, 213);">
     <!-- navigation -->
     {% include 'navbar.html' %}
 
@@ -20,7 +20,7 @@
         <input type="text" id="commonSearchBox" placeholder="Search..." class="form-control my-3">
    
     <!-- tab -->
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <ul class="nav nav-tabs" id="myTab" role="tablist" style="background-color: rgb(246, 255, 244);">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="ActiveUsers-tab" data-bs-toggle="tab" data-bs-target="#ActiveUsers-tab-pane" type="button" role="tab" aria-controls="ActiveUsers-tab-pane" aria-selected="true">Active Users</button>
         </li>
@@ -31,8 +31,11 @@
             <button class="nav-link" id="UnactiveUsers-tab" data-bs-toggle="tab" data-bs-target="#UnactiveUsers-tab-pane" type="button" role="tab" aria-controls="UnactiveUsers-tab-pane" aria-selected="false">Unactive Users</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="Admin-tab" data-bs-toggle="tab" data-bs-target="#Admin-tab-pane" type="button" role="tab" aria-controls="Admin-tab-pane" aria-selected="false">Admin</button>
+            <button class="nav-link" id="UnactiveCritic-tab" data-bs-toggle="tab" data-bs-target="#UnactiveCritic-tab-pane" type="button" role="tab" aria-controls="UnactiveCritic-tab-pane" aria-selected="false">Unactive Critic</button>
         </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="Admin-tab" data-bs-toggle="tab" data-bs-target="#Admin-tab-pane" type="button" role="tab" aria-controls="Admin-tab-pane" aria-selected="false">Admin</button>
+        </li> 
     </ul>
 
     <!-- tab content -->
@@ -64,6 +67,8 @@
                                 <div class="col-4">
                                     <form action="{% url 'delete_user' active_user.u_id %}" method="post">
                                         {% csrf_token %}
+                                        <input type="hidden" value="{{ active_user.username }}" name="username">
+                                        <input type="hidden" value="{{ active_user.level }}" name="level">
                                         <button type="submit"  class="btn btn-danger">Unactive</button>
                                     </form>
                                 </div>
@@ -108,6 +113,8 @@
                         <td>
                             <form action="{% url 'delete_user' active_critic.u_id %}" method="post">
                                 {% csrf_token %}
+                                <input type="hidden" value="{{ active_critic.username }}" name="username">
+                                <input type="hidden" value="{{ active_critic.level }}" name="level">
                                 <button type="submit"  class="btn btn-danger">Unactive</button>
                             </form>
                         </td>
@@ -142,6 +149,41 @@
                         <td>{{ unactive_user.timestamp }}</td>
                         <td>
                             <form action="{% url 'active_user' unactive_user.u_id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-success">Active</button>
+                            </form>
+                        </td>
+                        </tr>
+                        {% endfor %}
+                    {% endif %}
+                    <!-- <tr>
+                        <td>NO REQUEST PENDING</td>
+                    </tr> -->
+                </tbody>
+            </table>
+        </div>
+        <!-- non active critic list -->
+        <div class="tab-pane fade" id="UnactiveCritic-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+            <table class="table table-hover ">
+                <thead>
+                    <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Username / Email</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Request Time</th>
+                    <th scope="col ">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if unactive_critics %}
+                        {% for unactive_critic in unactive_critics %}
+                        <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ unactive_critic.username }} <br> {{ unactive_critic.email }}</td>
+                        <td>{{ unactive_critic.area }} , {{ unactive_critic.city }} , {{ unactive_critic.state }}</td>
+                        <td>{{ unactive_critic.timestamp }}</td>
+                        <td>
+                            <form action="{% url 'active_user' unactive_critic.u_id %}" method="post">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-success">Active</button>
                             </form>

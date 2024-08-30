@@ -94,7 +94,7 @@ def critic_request(request):
             [email],
             fail_silently=False,)
         # return HttpResponse("activated")
-    critic_requests=db.users.find({"$and":[{"level": "critic"},{"status": "0"}]}).sort('timestamp', -1)
+    critic_requests=db.users.find({"$and":[{"level": "critic"},{"status": "-1"}]}).sort('timestamp', -1)
     return render(request,"critic_request.html",{'critics':critic_requests})
 
 def user_list(request):
@@ -104,29 +104,47 @@ def user_list(request):
     active_users=list(user_collection.find({"$and":[{"level": "user"},{"status": "1"}]}).sort('timestamp', -1))
     active_critics=list(user_collection.find({"$and":[{"level": "critic"},{"status": "1"}]}).sort('timestamp', -1))
     unactive_users=list(user_collection.find({"$and":[{"level": "user"},{"status": "0"}]}).sort('timestamp', -1))
+    unactive_critics=list(user_collection.find({"$and":[{"level": "critic"},{"status": "0"}]}).sort('timestamp', -1))
     admin_list=list(user_collection.find({"$and":[{"level": "admin"},{"status": "1"}]}).sort('timestamp', -1))
 
     context={
         'active_users':active_users,
         'active_critics':active_critics,
         'unactive_users':unactive_users,
+        'unactive_critics':unactive_critics,
         'admin_list':admin_list
     }
     return render(request,"user_list.html",context)
 
+#for user delete account action by admin
 def delete_user(request,u_id):
     if 'username' not in request.session :
         return redirect('not_found_404')
     if request.method == 'POST':
+        username = request.POST['username']
+        level = request.POST['level']
         db.users.update_one(
             {"u_id": u_id},
             {"$set":{
                 "status":'0'
             }})
+        if(level=="critic"):
+            db.blogs.update_many(
+                {"username":username},
+                {"$set":{
+                    "status":'00'
+                }})
+        elif(level=="user"):
+            db.reviews.update_many(
+                {"username":username},
+                {"$set":{
+                    "status":'00'
+                }})
         return redirect('user_list')
     return HttpResponse('Opration Failed')
 
-def delete_user_account(request):
+#for user delete account action by user
+def delete_user_account(request): 
     if 'username' not in request.session :
         return redirect('not_found_404')
     if request.method == 'POST':
@@ -136,6 +154,22 @@ def delete_user_account(request):
             {"$set":{
                 "status":'0'
             }})
+        username = request.session.get('username')
+        userlevel = request.session.get('userlevel')
+        if(userlevel == "critic"):
+            # delete blogs of critics
+            db.blogs.update_many(
+                {"username":username},
+                {"$set":{
+                    "status":"0"
+                }})
+        elif(userlevel == "user"):
+            db.reviews.update_many(
+            # delete reviews of critics
+                {"username" : username},
+                {"$set":{
+                    "status":"0"
+                }})
         return redirect('logout')
     return HttpResponse('operation Failed')
 
@@ -172,6 +206,29 @@ def active_user(request,u_id):
             {"$set":{
                 "status":'1'
             }})
+        # activate user's data(reviews,blog)
+        # query = {"u_id": u_id}
+        # Specify the field to retrieve (only 'email' in this case)
+        # projection = { "_id":0,"username": 1, "level": 1}  # _id: 0 to exclude the _id field from the result
+        # user_info = db.uers.find_one(query, projection) # Retrieve the document
+        # if user_info:
+        #     username = user_info.get('username')
+        #     level = user_info.get('level')
+        #     if(level=="critic"):
+        #         db.blogs.update_many(
+        #             {"username":username},
+        #             {"$set":{
+        #                 "status":'1'
+        #             }})
+        #     elif(level=="user"):
+        #         db.reviews.update_many(
+        #             {"username":username},
+        #             {"$set":{
+        #                 "status":'1'
+        #             }})
+        # else:
+        #     username = None
+        #     level = None
         return redirect('user_list')
     return HttpResponse('Opration Failed')
 
@@ -318,7 +375,7 @@ def registration(request):
         usertype = request.POST['usertype']
 
         if usertype == "critic":
-            status="0"
+            status="-1"
         else :
             status="1"
         user_collection = db.users
