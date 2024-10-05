@@ -546,7 +546,7 @@ def review(request):
             'restaurantname':restaurantname.lower(),
             'area':area.lower(),  
             'city':city.lower(),
-            'description': description.lower(),
+            'description': description,
             'timestamp': datetime.datetime.now(),
             'status' : "1"
         }

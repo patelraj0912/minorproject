@@ -127,7 +127,7 @@
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     margin-bottom: 30px;
-    display: flex;
+    /* display: flex; */
     align-items: center;
     transition: transform 0.3s, box-shadow 0.3s;
 }
@@ -246,4 +246,14 @@
     transform: translateY(-50%);
     color: #6c757d;
     pointer-events: none;
+}
+.blurbg{
+    border-radius: 15px ;
+  width: 80%;
+  height: auto; /* Wraps the content */
+  background: rgba(115, 114, 114, 0.5); /* Transparent white background */
+  backdrop-filter: blur(150px); /* Blur effect */
+  -webkit-backdrop-filter: blur(10px); /* For Safari */
+  padding: 0px; /* Optional padding for content */
+  box-sizing: border-box;
 }

@@ -64,4 +64,23 @@
 .cnt::-webkit-scrollbar {
   display: none; /* Hides the scrollbar */
 }
-
+.loginim{
+  border-radius: 15px ;
+  width: 80%;
+  height: auto; /* Wraps the content */
+  background: rgba(115, 114, 114, 0.5); /* Transparent white background */
+  backdrop-filter: blur(150px); /* Blur effect */
+  -webkit-backdrop-filter: blur(10px); /* For Safari */
+  padding: 0px; /* Optional padding for content */
+  box-sizing: border-box;
+}
+.sliderlabelbg{
+  border-radius: 15px ;
+  width: auto;
+  height: auto; /* Wraps the content */
+  background: transparent; /* Transparent white background */
+  backdrop-filter: blur(80px); /* Blur effect */
+  -webkit-backdrop-filter: blur(10px); /* For Safari */
+  padding: 0px; /* Optional padding for content */
+  box-sizing: border-box;
+}

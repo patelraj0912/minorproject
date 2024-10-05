@@ -2,33 +2,63 @@
 
 {% if blogs %}
     {% for blog in blogs %}
-    <div class="content">
-    <section class="post mx-3 mt-3">
-        <img src="{{ blog.dish_image }}" alt="Blog Post " class="post-img">
-        <div class="post-text">
-            {% if 'userlevel' in request.session and request.session.userlevel == "admin" %}
-            <strong>Blog ID : {{ blog.b_id }}</strong>
-            {% endif %}
-            <p class="post-date"><small>{{ blog.timestamp }}</small></p>
-            <p class="post-title"><h3>{{ blog.dish_name|title  }}</h3></p>
-            <p class="post-content">
-                {{ blog.description }}
-            </p>
-            <p class="post-author"><strong>Author:</strong>{{ blog.username }}</p>
-            <p class="post-restaurant"><strong>Restaurant:</strong> {{ blog.restaurant_name|title   }}</p>
-            <p class="post-place"><strong>Place:</strong>  {{ blog.area|capfirst }} , {{ blog.city|capfirst }} , {{ blog.state|capfirst }}</p>
-        
-        {% if 'userlevel' in request.session and request.session.userlevel == "admin" %}
-        <div class="row ">
-            <form action="{% url 'delete_blog_by_admin' blog.b_id %}" method="POST">
-                {% csrf_token %}
-                <input class="btn btn-danger" type="submit" value="Delete">
-            </form>
+    <div class="m-3 bg-light bg-opacity-75 bg-gradient rounded">
+        <div class="row">
+            <div class="col-6"><img src="{{ blog.dish_image }}" alt="Blog Post" class="w-100 h-auto p-5"></div>
+            <div class="col-6 py-5">
+                {% if 'userlevel' in request.session and request.session.userlevel == "admin" %}
+                <strong>Blog ID : {{ blog.b_id }}</strong>
+                {% endif %}
+                <p class="post-date"><small>{{ blog.timestamp }}</small></p>
+                <p class="post-title"><h3>{{ blog.dish_name|title  }}</h3></p>
+                <p class="post-author"><strong>Author:</strong>{{ blog.username }}</p>
+                <p class="post-restaurant"><strong>Restaurant:</strong> {{ blog.restaurant_name|title   }}</p>
+                <p class="post-place"><strong>Place:</strong>  {{ blog.area|capfirst }} , {{ blog.city|capfirst }} , {{ blog.state|capfirst }}</p>
+                {% if 'userlevel' in request.session and request.session.userlevel == "admin" %}
+                    <div class="row ">
+                        <form action="{% url 'delete_blog_by_admin' blog.b_id %}" method="POST">
+                            {% csrf_token %}
+                            <input class="btn btn-danger" type="submit" value="Delete">
+                        </form>
+                    </div>
+                {% endif %}
+            </div>
         </div>
-        {% endif %}
+        <div class="row px-5">
+            <div class="col-12">
+                <p class="post-content w-100" style="white-space: nowrap">
+                    <pre style="  white-space: pre-wrap; word-wrap: break-word;overflow: auto;max-width: 100%;"> {{ blog.description }} </pre>
+                    </p>
+            </div>
+        </div>
     </div>
-    </section>
-</div>
+    <!-- <div class="content">
+        <section class="post mx-3 mt-3">
+            <img src="{{ blog.dish_image }}" alt="Blog Post" width="100%" class="post-img">
+            <div class="post-text">
+                {% if 'userlevel' in request.session and request.session.userlevel == "admin" %}
+                <strong>Blog ID : {{ blog.b_id }}</strong>
+                {% endif %}
+                <p class="post-date"><small>{{ blog.timestamp }}</small></p>
+                <p class="post-title"><h3>{{ blog.dish_name|title  }}</h3></p>
+                <p class="post-content w-100" style="white-space: nowrap">
+                <pre style="  white-space: pre-wrap; word-wrap: break-word;overflow: auto;max-width: 100%;"> {{ blog.description }} </pre>
+                </p>
+                <p class="post-author"><strong>Author:</strong>{{ blog.username }}</p>
+                <p class="post-restaurant"><strong>Restaurant:</strong> {{ blog.restaurant_name|title   }}</p>
+                <p class="post-place"><strong>Place:</strong>  {{ blog.area|capfirst }} , {{ blog.city|capfirst }} , {{ blog.state|capfirst }}</p>
+            
+                {% if 'userlevel' in request.session and request.session.userlevel == "admin" %}
+                    <div class="row ">
+                        <form action="{% url 'delete_blog_by_admin' blog.b_id %}" method="POST">
+                            {% csrf_token %}
+                            <input class="btn btn-danger" type="submit" value="Delete">
+                        </form>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+    </div> -->
             <!-- <div class="blog-content">
                 <div class="card post">
                     <div class="card-body">
@@ -67,3 +97,5 @@
     {% else %}
         <p class="card mt-5 text-center text-bg" style=" background-color:rgba(255, 249, 243, 0.909);">No Blogs found.</p>
 {% endif %}
+
+

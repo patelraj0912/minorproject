@@ -33,24 +33,24 @@
     </div>
     <div class="carousel-inner">
       <div class="carousel-item active" style="height: 500px;">
-        <img src="image/2.jpg" class="d-block w-100" alt="...">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>First slide label</h5>
-          <p>Some representative placeholder content for the first slide.</p>
+        <img src="../static/images/slider/slider_3.jpg " class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block text-dark sliderlabelbg">
+          <h3>Unvind's Pizza</h3>
+          <p>City Light Road,Surat.</p>
         </div>
       </div>
       <div class="carousel-item" style="height: 500px;">
-        <img src="image/slider.jpg" class="d-block w-100" alt="...">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Second slide label</h5>
-          <p>Some representative placeholder content for the second slide.</p>
+        <img src="../static/images/slider/slder_2.jpg " class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block text-dark sliderlabelbg">
+          <h3>Meraki cafe</h3>
+          <p>Old Nagardas Rd, near to andheri, Mumbai, Maharashtra</p>
         </div>
       </div>
       <div class="carousel-item" style="height: 500px;">
-        <img src="image/slider.jpg" class="d-block w-100" alt="...">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Third slide label</h5>
-          <p>Some representative placeholder content for the third slide.</p>
+        <img src="../static/images/slider/slider_1.jpg" class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block text-dark sliderlabelbg">
+          <h3>Chhole.com</h3>
+          <p>Jeewan Sathi Colony,J. P. Nagar, Bengaluru, Karnataka</p>
         </div>
       </div>
     </div>
@@ -67,17 +67,17 @@
   <!-- About us -->
   <div class="row g-0" style="margin-top:80px;">
     <div class="col-md-6">
-      <img style="height:400px;width:85%;margin:0 0 0 8%;" src="image/aboutus.jpg" class="img-fluid rounded-start"
+      <img style="height:400px;width:85%;margin:0 0 0 8%;" src="../static/images/logo/logo1.png" width="60px" height="60px" class="img-fluid rounded-start"
         alt="...">
     </div>
     <div class="col-md-6" style=" padding:0 3%;">
       <div class="card-body">
         <h4 class="card-title">About Us</h4>
         <div class="card-text">
-          <h5>Welcome to <strong>[Your Company Name]!</strong></h5>
-          <p>At [Your Company Name], our mission is to [briefly describe your core mission or what you offer]. Since [year], we’ve been [describe what sets you apart or your unique approach].</p>
-          <p>Our team of [mention your team’s expertise or size] is dedicated to [highlight your commitment, e.g., "providing exceptional service" or "delivering high-quality products"]. We pride ourselves on [mention a core value, e.g., "innovation" or "customer satisfaction"], ensuring that every [product/service] meets our high standards.</p>
-          <p>Discover how [Your Company Name] can [mention the benefit to the customer, e.g., "enhance your experience" or "meet your needs"]. Thank you for visiting!</p>
+          <h5>Welcome to <strong>Tastetrekker</strong></h5>
+          <p>At Tastetrekker, our mission is to bring you honest, insightful food reviews and blogs. Since our founding in [year], we’ve been dedicated to connecting food lovers with the best dining experiences, through our community of passionate users and critics.</p>
+          <p>Our team of experts is committed to providing authentic, high-quality content. We pride ourselves on transparency and user satisfaction, ensuring that every review and blog upholds our standards of trustworthiness and value.</p>
+          <p>Join Tastetrekker to explore, share, and discover the world of food like never before. Thank you for visiting!</p>
         </div>
         <a class="btn btn-primary" href="{% url 'about_us' %}" role="button" style="background:#4a7766;border: none;">Read More</a>
       </div>
@@ -98,9 +98,9 @@
               <div class="card" style="background: linear-gradient(35deg, rgba(255,249,227,1) 0%, rgba(255,255,255,1) 56%, rgba(240,248,255,1) 100%); ">
                 <div class="card-body">
                   <h5 class="card-title">{{ review.dishname|title  }}</h5>
-                  <p class="card-text">{{ review.description }}</p>
+                  <p class="card-text" style="  white-space: pre-wrap; word-wrap: break-word;overflow: auto;max-width: 100%;">{{ review.description }}</p>
                   <div class="row">
-                    <i class="col-6">{{ review.username }}</i>
+                    <i class="col-6">By : {{ review.username }}</i>
                     <small class="col-6" style="text-align: right;">{{ review.timestamp }}</small>
                   </div>
                 </div>
@@ -151,9 +151,10 @@
     <!-- login -->
     {% if 'username' in request.session %}
     {% else %}
-    <div style="margin-top:70px;">
-      <div class="loginim">
-        <div class="loginhp">
+    <div style="margin-top:70px;" class=" mb-5">
+      <center>
+      <div class="loginim ">
+        <div class="loginhp p-5">
           <div class=" text-center">
             <h4 class="texth4"> Login</h4>
             <div class="card-body">
@@ -164,6 +165,7 @@
           </div>
         </div>
       </div>
+    </center>
     </div>
     {% endif %}
   </div>
